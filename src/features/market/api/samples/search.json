@@ -1,0 +1,645 @@
+{
+  "coins": [
+    {
+      "id": "bitcoin",
+      "name": "Bitcoin",
+      "api_symbol": "bitcoin",
+      "symbol": "BTC",
+      "market_cap_rank": 1,
+      "thumb": "https://coin-images.coingecko.com/coins/images/1/thumb/bitcoin.png",
+      "large": "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png"
+    },
+    {
+      "id": "whitebit",
+      "name": "WhiteBIT Coin",
+      "api_symbol": "whitebit",
+      "symbol": "WBT",
+      "market_cap_rank": 16,
+      "thumb": "https://coin-images.coingecko.com/coins/images/27045/thumb/wbt_token.png",
+      "large": "https://coin-images.coingecko.com/coins/images/27045/large/wbt_token.png"
+    },
+    {
+      "id": "bitcoin-cash",
+      "name": "Bitcoin Cash",
+      "api_symbol": "bitcoin-cash",
+      "symbol": "BCH",
+      "market_cap_rank": 20,
+      "thumb": "https://coin-images.coingecko.com/coins/images/780/thumb/bitcoin-cash-circle.png",
+      "large": "https://coin-images.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png"
+    }
+  ],
+  "exchanges": [
+    {
+      "id": "tapbit",
+      "name": "Tapbit",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/1374/thumb/512.png",
+      "large": "https://coin-images.coingecko.com/markets/images/1374/large/512.png"
+    },
+    {
+      "id": "bitdelta",
+      "name": "BitDelta",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/1317/thumb/BD_icon_200x200.png",
+      "large": "https://coin-images.coingecko.com/markets/images/1317/large/BD_icon_200x200.png"
+    },
+    {
+      "id": "bybit_spot",
+      "name": "Bybit",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/698/thumb/bybit_spot.png",
+      "large": "https://coin-images.coingecko.com/markets/images/698/large/bybit_spot.png"
+    },
+    {
+      "id": "azbit",
+      "name": "Azbit",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/787/thumb/logo.png",
+      "large": "https://coin-images.coingecko.com/markets/images/787/large/logo.png"
+    },
+    {
+      "id": "upbit",
+      "name": "Upbit",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/117/thumb/upbit.png",
+      "large": "https://coin-images.coingecko.com/markets/images/117/large/upbit.png"
+    },
+    {
+      "id": "toobit",
+      "name": "Toobit",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/1139/thumb/Toobit_logo400X400.png",
+      "large": "https://coin-images.coingecko.com/markets/images/1139/large/Toobit_logo400X400.png"
+    },
+    {
+      "id": "ourbit",
+      "name": "Ourbit",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/11731/thumb/logo_200_200_2.png",
+      "large": "https://coin-images.coingecko.com/markets/images/11731/large/logo_200_200_2.png"
+    },
+    {
+      "id": "whitebit",
+      "name": "WhiteBIT",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/418/thumb/800_800.jpg",
+      "large": "https://coin-images.coingecko.com/markets/images/418/large/800_800.jpg"
+    },
+    {
+      "id": "bitget",
+      "name": "Bitget",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/540/thumb/2023-07-25_21.47.43.jpg",
+      "large": "https://coin-images.coingecko.com/markets/images/540/large/2023-07-25_21.47.43.jpg"
+    },
+    {
+      "id": "bitrue",
+      "name": "Bitrue",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/254/thumb/unnamed_%281%29.png",
+      "large": "https://coin-images.coingecko.com/markets/images/254/large/unnamed_%281%29.png"
+    },
+    {
+      "id": "bithumb",
+      "name": "Bithumb",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/6/thumb/bithumb_BI.png",
+      "large": "https://coin-images.coingecko.com/markets/images/6/large/bithumb_BI.png"
+    },
+    {
+      "id": "bitcastle",
+      "name": "bitcastle",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/1341/thumb/bitcastle_logo.png",
+      "large": "https://coin-images.coingecko.com/markets/images/1341/large/bitcastle_logo.png"
+    },
+    {
+      "id": "bitfinex",
+      "name": "Bitfinex",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/4/thumb/BItfinex.png",
+      "large": "https://coin-images.coingecko.com/markets/images/4/large/BItfinex.png"
+    },
+    {
+      "id": "bitunix",
+      "name": "Bitunix",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/1185/thumb/APP_icon_1024.png",
+      "large": "https://coin-images.coingecko.com/markets/images/1185/large/APP_icon_1024.png"
+    },
+    {
+      "id": "bitbaby-exchange",
+      "name": "Bitbaby",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/22200/thumb/bitbaby_transparent_200x200.png",
+      "large": "https://coin-images.coingecko.com/markets/images/22200/large/bitbaby_transparent_200x200.png"
+    },
+    {
+      "id": "bitstamp",
+      "name": "Bitstamp by Robinhood",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/9/thumb/bitstamp.jpg",
+      "large": "https://coin-images.coingecko.com/markets/images/9/large/bitstamp.jpg"
+    },
+    {
+      "id": "bitvavo",
+      "name": "Bitvavo",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/714/thumb/bitvavo-mark-square-black.png",
+      "large": "https://coin-images.coingecko.com/markets/images/714/large/bitvavo-mark-square-black.png"
+    },
+    {
+      "id": "bitmart",
+      "name": "BitMart",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/239/thumb/Bitmart.png",
+      "large": "https://coin-images.coingecko.com/markets/images/239/large/Bitmart.png"
+    },
+    {
+      "id": "uniswap_v3_arbitrum",
+      "name": "Uniswap V3 (Arbitrum One)",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/702/thumb/uniswap-v3.png",
+      "large": "https://coin-images.coingecko.com/markets/images/702/large/uniswap-v3.png"
+    },
+    {
+      "id": "bitci",
+      "name": "SAFEbit",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/450/thumb/safebit.png",
+      "large": "https://coin-images.coingecko.com/markets/images/450/large/safebit.png"
+    },
+    {
+      "id": "bitkan",
+      "name": "BitKan",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/21985/thumb/Official_BitKan_Logo_%28For_CoinGecko_Exchange_Listing%29.png",
+      "large": "https://coin-images.coingecko.com/markets/images/21985/large/Official_BitKan_Logo_%28For_CoinGecko_Exchange_Listing%29.png"
+    },
+    {
+      "id": "deribit_spot",
+      "name": "Deribit Spot",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/1144/thumb/deribit-spot.jpg",
+      "large": "https://coin-images.coingecko.com/markets/images/1144/large/deribit-spot.jpg"
+    },
+    {
+      "id": "bit2me",
+      "name": "Bit2Me",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/1137/thumb/bit2me.png",
+      "large": "https://coin-images.coingecko.com/markets/images/1137/large/bit2me.png"
+    },
+    {
+      "id": "bybit-eu",
+      "name": "Bybit EU",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/22125/thumb/Bybit_EU_logo.png",
+      "large": "https://coin-images.coingecko.com/markets/images/22125/large/Bybit_EU_logo.png"
+    },
+    {
+      "id": "bitbank",
+      "name": "Bitbank",
+      "market_type": "spot",
+      "thumb": "https://coin-images.coingecko.com/markets/images/122/thumb/bitbank.jpg",
+      "large": "https://coin-images.coingecko.com/markets/images/122/large/bitbank.jpg"
+    }
+  ],
+  "icos": [],
+  "categories": [
+    {
+      "id": "arbitrum-nova-ecosystem",
+      "name": "Arbitrum Nova Ecosystem"
+    },
+    {
+      "id": "arbitrum-ecosystem",
+      "name": "Arbitrum Ecosystem"
+    },
+    {
+      "id": "bitgert-ecosystem",
+      "name": "Bitgert Ecosystem"
+    },
+    {
+      "id": "bittensor-evm-ecosystem",
+      "name": "Bittensor EVM Ecosystem"
+    },
+    {
+      "id": "bitcoin-ecosystem",
+      "name": "Bitcoin Ecosystem"
+    },
+    {
+      "id": "bitlayer-ecosystem",
+      "name": "Bitlayer Ecosystem"
+    },
+    {
+      "id": "bittensor-ecosystem",
+      "name": "Bittensor Ecosystem"
+    },
+    {
+      "id": "bitcoin-layer-2",
+      "name": "Bitcoin Sidechains"
+    },
+    {
+      "id": "bitcichain-ecosystem",
+      "name": "Bitcichain Ecosystem"
+    },
+    {
+      "id": "bittensor-subnets",
+      "name": "Bittensor Subnets"
+    },
+    {
+      "id": "bitcoin-meme",
+      "name": "Bitcoin Meme"
+    },
+    {
+      "id": "bitkub-ecosystem",
+      "name": "Bitkub Ecosystem"
+    },
+    {
+      "id": "bittorrent-ecosystem",
+      "name": "BitTorrent Ecosystem"
+    },
+    {
+      "id": "bitstarters-launchpad",
+      "name": "BitStarters Launchpad"
+    },
+    {
+      "id": "bitrock-ecosystem",
+      "name": "Bitrock Ecosystem"
+    },
+    {
+      "id": "bouncebit-ecosystem",
+      "name": "BounceBit Ecosystem"
+    },
+    {
+      "id": "8bit-chain-ecosystem",
+      "name": "8Bit Chain Ecosystem"
+    },
+    {
+      "id": "bitcoin-fork",
+      "name": "Bitcoin Fork"
+    }
+  ],
+  "nfts": [
+    {
+      "id": "bitdogs",
+      "name": "Bitdogs",
+      "symbol": "BITDOGS_BTC",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/4451/thumb/bitdogs.png"
+    },
+    {
+      "id": "zbit-loot-box",
+      "name": "ZBIT Loot Box",
+      "symbol": "ZBIT-LOOT-BOX",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/4675/thumb/zbit-loot-box.png"
+    },
+    {
+      "id": "bitcoin-philately",
+      "name": " Bitcoin Philately",
+      "symbol": "PHILATELY",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/26180/thumb/bitcoin_philately.png"
+    },
+    {
+      "id": "bitcoin-bro-bear",
+      "name": "Bitcoin Bro Bear",
+      "symbol": "BTCBROBEAR",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15772/thumb/bitcoin-bro-bear.png"
+    },
+    {
+      "id": "bitcoin-babbies",
+      "name": "BITCOIN BABBIES",
+      "symbol": "BTCBABBIES",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/4181/thumb/bitcoin-babbies.gif"
+    },
+    {
+      "id": "bitcoin-punks",
+      "name": "Bitcoin Punks",
+      "symbol": "BITCOIN-PUNKS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3259/thumb/bitcoin-punks.png"
+    },
+    {
+      "id": "rabbit-planet",
+      "name": "Rabbit Planet",
+      "symbol": "RABBIT PLANET",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/2488/thumb/rabbit-planet.png"
+    },
+    {
+      "id": "bitcoin-frugs",
+      "name": "Bitcoin Frugs",
+      "symbol": "BTC-FRUGS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15369/thumb/bitcoin-frugs.jpg"
+    },
+    {
+      "id": "bitcoin-puppets",
+      "name": "Bitcoin Puppets",
+      "symbol": "BITCOIN-PUPPETS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3873/thumb/bitcoin-puppets.png"
+    },
+    {
+      "id": "genesis-genopets-habitats",
+      "name": "Genesis Genopets Habitats",
+      "symbol": "GENPETSHAB",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/2661/thumb/genesis-genopets-habitats.jpg"
+    },
+    {
+      "id": "bitcoin-bear-cubs",
+      "name": "Bitcoin Bear Cubs",
+      "symbol": "BBC",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3280/thumb/bitcoin-bear-cubs.png"
+    },
+    {
+      "id": "taproot-bitches",
+      "name": "Taproot Bitches",
+      "symbol": "TAPROOTBITCHES",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15030/thumb/taproot.png"
+    },
+    {
+      "id": "bit-bears-by-berachain",
+      "name": "Bit Bears by Berachain",
+      "symbol": "BITB",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/2114/thumb/bit-bears-by-berachain.png"
+    },
+    {
+      "id": "bitmappunks",
+      "name": "BitmapPunks",
+      "symbol": "BMP",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15733/thumb/bitmappunks.png"
+    },
+    {
+      "id": "dog-genesis",
+      "name": "$DOG | Genesis ",
+      "symbol": "DOG_OF_BITCOIN",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15299/thumb/dog-genesis.jpg"
+    },
+    {
+      "id": "dog-ordinals-szn-i-genesis",
+      "name": "$DOG | Ordinals - SZN I Genesis",
+      "symbol": "DOG_OF_BITCOIN",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/26163/thumb/dog-ordinals-szn-i-genesis.png"
+    },
+    {
+      "id": "bitcoin-wizards",
+      "name": "Bitcoin Wizards",
+      "symbol": "BITCOIN-WIZARDS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3683/thumb/wizards.png"
+    },
+    {
+      "id": "bitcoin-weirdos",
+      "name": "Bitcoin Weirdos",
+      "symbol": "BITCOIN-WEIRDOS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/25893/thumb/bitcoin-weirdos.png"
+    },
+    {
+      "id": "dog-ordinals-szn-ii-b9-450x",
+      "name": "$DOG | Ordinals - SZN II B9-450x",
+      "symbol": "DOG_OF_BITCOIN_SZN_II_B9450X",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15783/thumb/dog-ordinals-szn-ii-b9-450x.png"
+    },
+    {
+      "id": "bitcoin-boos-boottalion",
+      "name": "Bitcoin Boos: Boottalion",
+      "symbol": "BOOTTALION",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/4045/thumb/bitcoin-boos-boottalion.png"
+    },
+    {
+      "id": "bitcoin-trumps",
+      "name": "Bitcoin Trumps",
+      "symbol": "BITCOINTRUMPS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/4046/thumb/bitcoin-trumps.png"
+    },
+    {
+      "id": "cursed-bitcoin-punks",
+      "name": "Cursed Bitcoin Punks",
+      "symbol": "CURSEDBITCOINPUNKS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3311/thumb/cursed-bitcoin-punks.png"
+    },
+    {
+      "id": "bitcoin-burials",
+      "name": "Bitcoin Burials",
+      "symbol": "BITCOINBURIALS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3863/thumb/BURY.jpg"
+    },
+    {
+      "id": "bitcoin-shrooms",
+      "name": "Bitcoin Shrooms",
+      "symbol": "BITCOINSHROOMS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/4161/thumb/bitcoin-shrooms.jpg"
+    },
+    {
+      "id": "meebits",
+      "name": "Meebits",
+      "symbol": "⚇",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/28/thumb/meebits.png"
+    },
+    {
+      "id": "bitcoin-bandits",
+      "name": "Bitcoin Bandits",
+      "symbol": "BITCOIN-BANDITS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3266/thumb/bitcoin-bandits.png"
+    },
+    {
+      "id": "bitcoin-rugs",
+      "name": "Bitcoin Rugs",
+      "symbol": "BITCOINRUGS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3313/thumb/bitcoin-rugs.png"
+    },
+    {
+      "id": "bitcoin-mechanics",
+      "name": "Bitcoin Mechanics",
+      "symbol": "BTC_MECHANICS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3306/thumb/bitcoin-mechanics.png"
+    },
+    {
+      "id": "bitcoin-frogs",
+      "name": "Bitcoin Frogs",
+      "symbol": "BITCOIN-FROGS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3262/thumb/bitcoin-frogs.png"
+    },
+    {
+      "id": "bit-apes-by-bayc-members",
+      "name": "BIT APES by BAYC Members",
+      "symbol": "BITAPES",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3274/thumb/bit-apes-by-bayc-members.png"
+    },
+    {
+      "id": "bitcoin-whales",
+      "name": "Bitcoin Whales",
+      "symbol": "BITCOINWHALES",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3269/thumb/bitcoin-whales.png"
+    },
+    {
+      "id": "bitmaps-by-oto",
+      "name": "Bitmaps by OTO",
+      "symbol": "BITMAPS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3314/thumb/bitmaps-by-oto.gif"
+    },
+    {
+      "id": "bitcoin-crypto-dickbutts",
+      "name": "Bitcoin Crypto DickButts",
+      "symbol": "BITCOIN-CRYPTODICKBUTTS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3656/thumb/bitcoin-crypto-dickbutts.png"
+    },
+    {
+      "id": "bitcoin-pigs",
+      "name": "Bitcoin Pigs",
+      "symbol": "BITCOINPIGS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3355/thumb/bitcoin-pigs.jpg"
+    },
+    {
+      "id": "bitbeast",
+      "name": "BITBEAST",
+      "symbol": "BIT",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3818/thumb/bitbeast.png"
+    },
+    {
+      "id": "planets",
+      "name": "Planets",
+      "symbol": "PLANETSBITCOIN",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/25981/thumb/planets.png"
+    },
+    {
+      "id": "eightbit-me",
+      "name": "EightBit Me",
+      "symbol": "BIT",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/548/thumb/eightbit-me.png"
+    },
+    {
+      "id": "bitcoin-buds",
+      "name": "Bitcoin Buds ",
+      "symbol": "BITCOIN-BUDS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3285/thumb/bitcoin-buds.jpg"
+    },
+    {
+      "id": "bitcoin-pandas",
+      "name": "Bitcoin Pandas",
+      "symbol": "BITCOIN-PANDAS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3365/thumb/bitcoin-pandas.jpg"
+    },
+    {
+      "id": "bitmap",
+      "name": "bitmap",
+      "symbol": "BITMAP",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3255/thumb/bitmap.png"
+    },
+    {
+      "id": "bitch-better-have-my-money-by-rihanna-anotherblock",
+      "name": "Bitch Better Have My Money",
+      "symbol": "DROP5",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/2956/thumb/bitch-better-have-my-money-by-rihanna-anotherblock.png"
+    },
+    {
+      "id": "metahero-universe-united-planets",
+      "name": "Inhabitants: United Planets",
+      "symbol": "PLANET",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/532/thumb/metahero-universe-united-planets.png"
+    },
+    {
+      "id": "orbit-by-jiannan-huang",
+      "name": "Orbit By Jiannan Huang",
+      "symbol": "ORBIT",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/4533/thumb/orbit-by-jiannan-huang.png"
+    },
+    {
+      "id": "trump-bitcoin-digital-trading-cards",
+      "name": "Trump Bitcoin Digital Trading Cards",
+      "symbol": "TRUMP-BITCOIN-TRADING-CARDS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15370/thumb/trump-bitcoin-digital-trading-cards.png"
+    },
+    {
+      "id": "bitcoin-puppets-honoraries",
+      "name": "Bitcoin Puppets Honoraries",
+      "symbol": "BITCOIN-PUPPETS-HONORARIES",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15069/thumb/bitcoin-puppets-honoraries.png"
+    },
+    {
+      "id": "metahero",
+      "name": "Inhabitants: Generative Identities",
+      "symbol": "HERO",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/132/thumb/HERO.jpg"
+    },
+    {
+      "id": "orbitflare-pass",
+      "name": "OrbitFlare Pass",
+      "symbol": "ORBITFLARE",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/4803/thumb/obp.png"
+    },
+    {
+      "id": "playboy-rabbitars-official",
+      "name": "Playboy Rabbitars Official",
+      "symbol": "PLAY",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/501/thumb/playboy-rabbitars-official.png"
+    },
+    {
+      "id": "ragnarok-meta",
+      "name": "77-Bit",
+      "symbol": "RONIN",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/365/thumb/77-bit.png"
+    },
+    {
+      "id": "bit-kids",
+      "name": "Bit Kids",
+      "symbol": "BIT KIDS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3921/thumb/bit-kids.png"
+    },
+    {
+      "id": "memecards",
+      "name": "MemeCards",
+      "symbol": "RIBBIT",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15227/thumb/memecards.gif"
+    },
+    {
+      "id": "openseaonarbitrum",
+      "name": "OpenSea Arbitrum by Layer2DAO",
+      "symbol": "OPENSEAARB",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/1840/thumb/https-fanbase-1-s3-amazonaws-com-quixotic-collection-profile-1_kba2odb-png.png"
+    },
+    {
+      "id": "bit-bears",
+      "name": "Bit Bears",
+      "symbol": "BITB",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15571/thumb/bit-bears.gif"
+    },
+    {
+      "id": "bitcoinbearclub",
+      "name": "Bitcoin Bear Club",
+      "symbol": "BBC",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/1284/thumb/unnamed.gif"
+    },
+    {
+      "id": "ribbitstract",
+      "name": "Ribbitstract",
+      "symbol": "RIBBIT",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15510/thumb/ribbitstract.gif"
+    },
+    {
+      "id": "arbitrum-odyssey",
+      "name": "Arbitrum Odyssey NFT",
+      "symbol": "ARBITRUM",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/1822/thumb/https-fanbase-1-s3-amazonaws-com-quixotic-collection-profile-046qixwt_400x400-jpeg.jpg"
+    },
+    {
+      "id": "bitcoinorb",
+      "name": "BITCOINORB",
+      "symbol": "BTCORB",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/2944/thumb/bitcoinorb.png"
+    },
+    {
+      "id": "right-place-right-time-bitcoin-volatility-art-by-matt-kane",
+      "name": "Right Place \u0026 Right Time - Bitcoin Volatility Art",
+      "symbol": "VLY",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/3530/thumb/right-place-right-time-bitcoin-volatility-art-by-matt-kane.png"
+    },
+    {
+      "id": "abstract-rabbits",
+      "name": "Abstract Rabbits",
+      "symbol": "RABBITS",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15561/thumb/abstract-rabbits.png"
+    },
+    {
+      "id": "bit-pixels",
+      "name": "Bit pixels",
+      "symbol": "BERPIX",
+      "thumb": "https://coin-images.coingecko.com/nft_contracts/images/15623/thumb/bit-pixels.gif"
+    }
+  ]
+}
