@@ -47,6 +47,15 @@ const toApiError = (error: unknown): ApiError => {
   }
 }
 
+export const isApiError = (value: unknown): value is ApiError => {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "status" in value &&
+    "message" in value
+  )
+}
+
 client.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject(toApiError(error)),

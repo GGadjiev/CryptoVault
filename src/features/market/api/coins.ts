@@ -1,6 +1,14 @@
 import type { Coin } from "../types.ts";
 import {client} from "@/features/market/api/client.ts";
-import type {CoinGeckoMarketRow} from "@/features/market/api/response.ts";
+import type {
+  CoinGeckoMarketRow,
+  CoinGeckoSearchResponse
+} from "@/features/market/api/response.ts";
+
+interface fetchMarketsOptions {
+  signal?: AbortSignal,
+  ids?: string[],
+}
 
 const toCoin = (row: CoinGeckoMarketRow): Coin => {
   return {
@@ -15,14 +23,25 @@ const toCoin = (row: CoinGeckoMarketRow): Coin => {
   }
 }
 
-export const fetchMarkets = async (): Promise<Coin[]> => {
+export const fetchMarkets = async (options: fetchMarketsOptions): Promise<Coin[]> => {
+  const { signal, ids } = options
   const response = await client.get<CoinGeckoMarketRow[]>('/coins/markets', {
     params: {
       vs_currency: "usd",
       order: "market_cap_desc",
       per_page: 50,
       page: 1,
-    }
+      ...(ids && ids.length > 0 ? { ids: ids.join(',') } : {}),
+    },
+    signal,
   })
   return response.data.map(toCoin)
+}
+
+export const fetchCoinIds = async (query: string, signal?: AbortSignal): Promise<string[]> => {
+  const response = await client.get<CoinGeckoSearchResponse>('/search', {
+    params: { query },
+    signal,
+  })
+  return response.data.coins.map(coin => coin.id)
 }

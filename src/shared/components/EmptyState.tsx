@@ -2,7 +2,7 @@ import styles from "./EmptyState.module.scss";
 
 interface EmptyStateProps {
   title: string;
-  description: string;
+  description?: string;
 }
 
 export const EmptyState = (props: EmptyStateProps) => {
