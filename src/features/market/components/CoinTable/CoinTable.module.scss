@@ -1,0 +1,102 @@
+/* Обёртка: на узких экранах скроллится сама таблица, а не ломается страница */
+.tableWrapper {
+  overflow-x: auto;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;  /* цифры одной ширины → колонки ровные */
+  white-space: nowrap;                  /* "$67,245.61" не разорвётся на 2 строки */
+}
+
+/* ===== Шапка ===== */
+
+.table th {
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  text-align: left;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Числовые колонки (3–5: Цена, 24ч %, Капитализация) — вправо */
+.table th:nth-child(n + 3) {
+  text-align: right;
+}
+
+/* ===== Ячейки ===== */
+
+.table td {
+  padding: 10px 16px;
+  text-align: right;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ...кроме первых двух (№ и Монета) */
+.table td:nth-child(-n + 2) {
+  text-align: left;
+}
+
+/* У последней строки нет границы — её роль играет рамка обёртки */
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Аффорданс клика: строки станут ссылками на монету в 2.2 */
+.table tbody tr:hover {
+  background-color: var(--color-bg);
+}
+
+/* ===== Колонка № ===== */
+
+.rank {
+  width: 1%;  /* классический трюк: колонка сжимается до содержимого */
+  color: var(--color-text-muted);
+}
+
+/* ===== Ячейка «Монета»: лого + имя/тикер + слот extra ===== */
+
+.nameCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 200px;
+}
+
+.nameCell img {
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.symbol {
+  margin-left: 6px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* ===== Тренды — классы из getTrend(): styles[trend] ===== */
+
+.success {
+  color: var(--color-success);
+}
+
+.danger {
+  color: var(--color-danger);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
