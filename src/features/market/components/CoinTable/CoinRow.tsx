@@ -1,11 +1,11 @@
-import type { Coin } from "@/features/market/types.ts";
+import type { Coin } from "../../types";
 import type { ReactNode } from "react";
 import {
   formatCompactMoney,
   formatMoney,
   formatPercent,
   getTrend
-} from "@/shared/lib/formatters.ts";
+} from "@/shared/lib/formatters";
 import styles from './CoinTable.module.scss'
 
 interface CoinRowProps {

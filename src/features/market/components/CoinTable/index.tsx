@@ -1,6 +1,6 @@
-import type {Coin} from "@/features/market/types.ts";
-import {type ReactNode} from "react";
-import {CoinRow} from "@/features/market/components/CoinTable/CoinRow.tsx";
+import type { Coin } from "../../types";
+import { type ReactNode } from "react";
+import { CoinRow } from "../CoinTable/CoinRow";
 import styles from "./CoinTable.module.scss";
 
 interface CoinTableProps {

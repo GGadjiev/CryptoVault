@@ -1,7 +1,7 @@
-import type {ApiError, Coin} from "@/features/market/types.ts";
+import type {ApiError, Coin} from "../types";
 import {useEffect, useState} from "react";
-import {fetchCoinIds, fetchMarkets} from "@/features/market/api/coins.ts";
-import {isApiError} from "@/features/market/api/client.ts";
+import {fetchCoinIds, fetchMarkets} from "../api/coins";
+import {isApiError} from "../api/client";
 
 interface UseCoinsResult {
   data: Coin[] | null

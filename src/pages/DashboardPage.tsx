@@ -1,12 +1,10 @@
-import {useState} from "react";
-import { useDebouncedValue } from "@/shared/hooks/useDebouncedValue.ts";
-import {useCoins} from "@/features/market";
-import {Spinner} from "@/shared/components/Spinner.tsx";
-import {ErrorState} from "@/shared/components/ErrorState.tsx";
-import {EmptyState} from "@/shared/components/EmptyState.tsx";
-import {CoinTable} from "@/features/market/components/CoinTable";
+import { useState } from "react";
+import { useDebouncedValue } from "@/shared/hooks/useDebouncedValue";
+import { useCoins, CoinTable, CoinSearch } from '@/features/market'
+import { Spinner } from "@/shared/components/Spinner";
+import { ErrorState } from "@/shared/components/ErrorState";
+import { EmptyState } from "@/shared/components/EmptyState";
 import styles from './DashboardPage.module.scss'
-import {CoinSearch} from "@/features/market/components/CoinSearch";
 
 export const DashboardPage = () => {
   const [query, setQuery] = useState("");

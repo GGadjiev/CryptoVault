@@ -1,9 +1,9 @@
-import type { Coin } from "../types.ts";
-import {client} from "@/features/market/api/client.ts";
+import type { Coin } from "../types";
+import { client } from "../api/client";
 import type {
   CoinGeckoMarketRow,
   CoinGeckoSearchResponse
-} from "@/features/market/api/response.ts";
+} from "./responses";
 
 interface fetchMarketsOptions {
   signal?: AbortSignal,

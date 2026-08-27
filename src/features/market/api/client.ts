@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { ApiError } from "../types.ts";
+import type { ApiError } from "../types";
 
 export const client = axios.create({
   baseURL: "https://api.coingecko.com/api/v3",
