@@ -22,3 +22,31 @@ export interface CoinGeckoSearchResult {
 export interface CoinGeckoSearchResponse {
   coins: CoinGeckoSearchResult[];
 }
+
+export interface CoinGeckoDetailsResponse {
+  id: string;
+  symbol: string;
+  name: string;
+  hashing_algorithm: string | null;
+  genesis_date: string | null;
+  image: {
+    thumb: string;
+    small: string;
+    large: string;
+  }
+  description: { en: string; };
+  links: {
+    homepage: string[];
+    blockchain_site: string[];
+  }
+  market_data: {
+    current_price: { usd: number; };
+    high_24h: { usd: number };
+    low_24h: { usd: number };
+    market_cap: { usd: number };
+    ath: { usd: number };
+    atl: { usd: number };
+    price_change_percentage_24h: number | null;
+    total_volume: { usd: number };
+  }
+}
