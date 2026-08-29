@@ -11,18 +11,27 @@ import styles from './CoinTable.module.scss'
 interface CoinRowProps {
   coin: Coin,
   extra?: ReactNode
+  onClick?: () => void
 }
 
 export const CoinRow = (props: CoinRowProps) => {
   const {
     coin,
-    extra
+    extra,
+    onClick,
   } = props
 
   const trend = getTrend(coin.priceChange24h)
 
+  const clickable = onClick !== undefined
+
   return (
-    <tr>
+    <tr
+      onClick={onClick}
+      className={clickable ? styles.rowClickable : undefined}
+      tabIndex={clickable ? 0 : undefined}
+      onKeyDown={clickable ? (e) => { if (e.key === "Enter") onClick() } : undefined}
+    >
       <td className={styles.rank}>
         {coin.marketCapRank}
       </td>

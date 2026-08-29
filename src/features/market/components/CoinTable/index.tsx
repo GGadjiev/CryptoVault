@@ -6,12 +6,14 @@ import styles from "./CoinTable.module.scss";
 interface CoinTableProps {
   coins: Coin[]
   renderExtra?: (coin: Coin) => ReactNode
+  onRowClick?: (coinId: string) => void;
 }
 
 export const CoinTable = (props: CoinTableProps) => {
   const {
     coins,
     renderExtra,
+    onRowClick,
   } = props
 
   return (
@@ -32,6 +34,7 @@ export const CoinTable = (props: CoinTableProps) => {
               key={coin.id}
               coin={coin}
               extra={renderExtra ? renderExtra(coin) : undefined}
+              onClick={onRowClick ? () => onRowClick(coin.id) : undefined}
             />
           ))}
         </tbody>

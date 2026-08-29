@@ -1,0 +1,24 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.backButton {
+  align-self: flex-start;
+  padding: 6px 12px;
+  font-size: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.notFound { text-align: center; padding: 48px 24px; }
+.notFoundTitle { margin: 0 0 8px; font-size: 20px; }
+.notFoundText { margin: 0 0 16px; color: var(--color-text-muted); }
+.notFoundLink { color: var(--color-primary); }

@@ -20,7 +20,8 @@ export const router = createBrowserRouter([
         element: <DashboardPage />
       },
       {
-        path: "coin-details",
+        // path: "coin-details",
+        path: "/coins/:id",
         element: <CoinDetailsPage />
       },
       {

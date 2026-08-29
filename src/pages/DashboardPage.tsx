@@ -5,11 +5,13 @@ import { Spinner } from "@/shared/components/Spinner";
 import { ErrorState } from "@/shared/components/ErrorState";
 import { EmptyState } from "@/shared/components/EmptyState";
 import styles from './DashboardPage.module.scss'
+import {useNavigate} from "react-router-dom";
 
 export const DashboardPage = () => {
   const [query, setQuery] = useState("");
   const debouncedValue = useDebouncedValue(query, 1000);
   const { data, isLoading, error, refetch } = useCoins({ search: debouncedValue })
+  const navigate = useNavigate();
 
   return (
     <div className={styles.page}>
@@ -26,7 +28,7 @@ export const DashboardPage = () => {
       )}
 
       {!isLoading && !error && data && data.length > 0 && (
-        <CoinTable coins={data} />
+        <CoinTable coins={data} onRowClick={(id) => navigate(`/coins/${id}`)} />
       )}
     </div>
   )
