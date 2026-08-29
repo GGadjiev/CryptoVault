@@ -3,6 +3,7 @@ import {Spinner} from "@/shared/components/Spinner.tsx";
 import {ErrorState} from "@/shared/components/ErrorState.tsx";
 import {useCoin} from "@/features/market";
 import styles from './CoinDetailsPage.module.scss'
+import {CoinDetailsView} from "@/features/market/components/CoinDetails/CoinDetailsView.tsx";
 
 export const CoinDetailsPage = () => {
   const { id } = useParams();
@@ -53,7 +54,7 @@ export const CoinDetailsPage = () => {
   return (
     <div className={styles.page}>
       <BackButton onClick={goBack} />
-      <div>Здесь будет контент: {data.name}</div>
+      <CoinDetailsView details={data} />
     </div>
   )
 }

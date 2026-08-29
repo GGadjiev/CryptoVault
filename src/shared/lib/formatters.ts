@@ -37,3 +37,13 @@ export const getTrend = (value: number | null): 'success' | 'danger' | 'muted' =
   if (value === null) return 'muted'
   return value >= 0 ? 'success' : 'danger'
 }
+
+const dateFmt = new Intl.DateTimeFormat("ru-RU", {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+})
+
+export const formatDate = (isoDate: string): string => {
+  return dateFmt.format(new Date(isoDate))
+}
