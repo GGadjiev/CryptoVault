@@ -71,13 +71,13 @@ export const fetchCoinIds = async (query: string, signal?: AbortSignal): Promise
   return response.data.coins.map(coin => coin.id)
 }
 
-export const fetchMarketChart = async (coinId: string, signal?: AbortSignal): Promise<ChartPoint[]> => {
+export const fetchMarketChart = async (coinId: string, days: number, signal?: AbortSignal): Promise<ChartPoint[]> => {
   const response = await client.get<{ prices: [number, number][] }>(
     `/coins/${coinId}/market_chart`,
     {
       params: {
         vs_currency: "usd",
-        days: 7
+        days
       },
       signal,
     }
