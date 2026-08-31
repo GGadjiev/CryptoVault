@@ -12,6 +12,7 @@ interface UseCoinsResult {
 
 interface UseCoinsOptions {
   search?: string
+  ids?: string[]
 }
 
 export const useCoins = (options: UseCoinsOptions = {}): UseCoinsResult => {
@@ -21,6 +22,7 @@ export const useCoins = (options: UseCoinsOptions = {}): UseCoinsResult => {
   const [retryCount, setRetryCount] = useState(0)
 
   const search= options.search?.trim() || ''
+  const ids = options.ids
 
   useEffect(() => {
     const controller = new AbortController()
@@ -32,16 +34,20 @@ export const useCoins = (options: UseCoinsOptions = {}): UseCoinsResult => {
       try {
         let coins: Coin[]
         if (search) {
-          const ids = await fetchCoinIds(search, controller.signal)
+          const foundIds = await fetchCoinIds(search, controller.signal)
 
           if (controller.signal.aborted) return
 
-          if (ids.length === 0) {
+          if (foundIds.length === 0) {
             setData([])
             setIsLoading(false)
             return
           }
+          coins = await fetchMarkets({ signal: controller.signal, ids: foundIds })
+        } else if (ids && ids.length > 0) {
           coins = await fetchMarkets({ signal: controller.signal, ids })
+        } else if (ids) {
+          coins = []
         } else {
           coins = await fetchMarkets({ signal: controller.signal })
         }
@@ -60,7 +66,7 @@ export const useCoins = (options: UseCoinsOptions = {}): UseCoinsResult => {
     load()
 
     return () => controller.abort()
-  }, [retryCount, search])
+  }, [retryCount, search, ids])
 
   const refetch = () => {
     setRetryCount((count) => count + 1)

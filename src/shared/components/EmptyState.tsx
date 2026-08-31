@@ -1,14 +1,17 @@
 import styles from "./EmptyState.module.scss";
+import type {ReactNode} from "react";
 
 interface EmptyStateProps {
   title: string;
   description?: string;
+  action?: ReactNode
 }
 
 export const EmptyState = (props: EmptyStateProps) => {
   const {
     title,
     description,
+    action,
   } = props
 
   return (
@@ -18,6 +21,7 @@ export const EmptyState = (props: EmptyStateProps) => {
         <p className={styles.description}>
           {description}
         </p>}
+      {action && <div className={styles.action}>{action}</div>}
     </div>
   )
 }
