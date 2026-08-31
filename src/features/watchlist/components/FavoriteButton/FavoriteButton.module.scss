@@ -1,0 +1,26 @@
+.outline {
+  padding: 2px;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--color-border);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.filled {
+  padding: 2px;
+  font-size: 18px;
+  line-height: 1;
+  color: #f5b301;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.outline:hover,
+.filled:hover {
+  color: #f5b301;
+}
