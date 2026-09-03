@@ -81,3 +81,22 @@
   font-size: 12px;
   color: var(--color-text-muted);
 }
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.cancelButton {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  border-color: var(--color-text-muted);
+}

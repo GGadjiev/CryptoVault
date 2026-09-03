@@ -1,11 +1,14 @@
 import type { Coin } from "@/features/market";
-import type { NewHolding } from "@/features/portfolio";
-import {type SubmitEvent, useState} from "react";
+import type {Holding, NewHolding} from "@/features/portfolio";
+import {useState} from "react";
 import styles from './HoldingForm.module.scss'
 
 interface HoldingFormProps {
   coins: Coin[],
   onSubmit: (holding: NewHolding) => void
+
+  editing?: Holding
+  onCancel?: () => void
 }
 
 interface FormState {
@@ -17,9 +20,13 @@ interface FormState {
 type FormErrors = Partial<Record<keyof FormState, string>>
 
 export const HoldingForm = (props: HoldingFormProps) => {
-  const { coins, onSubmit } = props
+  const { coins, onSubmit, editing, onCancel } = props
 
-  const [form, setForm] = useState<FormState>({ coinId: '', amount: '', buyPrice: '', })
+  const [form, setForm] = useState<FormState>(
+    editing
+      ? { coinId: editing.coinId, amount: String(editing.amount), buyPrice: String(editing.buyPrice) }
+      : { coinId: '', amount: '', buyPrice: '', }
+  )
   const [errors, setErrors] = useState<FormErrors>({})
 
   const validate = (form: FormState): FormErrors => {
@@ -55,7 +62,7 @@ export const HoldingForm = (props: HoldingFormProps) => {
     setErrors(prev => ({ ...prev, [field]: undefined }))
   }
 
-  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const validation = validate(form)
@@ -88,7 +95,12 @@ export const HoldingForm = (props: HoldingFormProps) => {
       <label className={styles.field}>
         <span className={styles.label}>Монета</span>
         <select
-          className={styles.input}
+          className={
+            errors.coinId
+              ? `${styles.input} ${styles.inputError}`
+              : styles.input
+          }
+          disabled={!!editing}
           value={form.coinId}
           onChange={event => handleChange('coinId', event.target.value)}
         >
@@ -105,7 +117,11 @@ export const HoldingForm = (props: HoldingFormProps) => {
       <label className={styles.field}>
         <span className={styles.label}>Количество</span>
         <input
-          className={styles.input}
+          className={
+            errors.amount
+              ? `${styles.input} ${styles.inputError}`
+              : styles.input
+          }
           type='text'
           inputMode='decimal'
           value={form.amount}
@@ -118,7 +134,11 @@ export const HoldingForm = (props: HoldingFormProps) => {
       <label className={styles.field}>
         <span className={styles.label}>Цена покупки, $</span>
         <input
-          className={styles.input}
+          className={
+            errors.buyPrice
+              ? `${styles.input} ${styles.inputError}`
+              : styles.input
+          }
           type='text'
           inputMode='decimal'
           value={form.buyPrice}
@@ -128,12 +148,24 @@ export const HoldingForm = (props: HoldingFormProps) => {
         {errors.buyPrice && <span className={styles.error}>{errors.buyPrice}</span>}
       </label>
 
-      <button
-        type='submit'
-        className={styles.submit}
-      >
-        Добавить сделку
-      </button>
+      <div className={styles.actions}>
+        <button
+          type='submit'
+          className={styles.submit}
+        >
+          {editing ? 'Сохранить' : 'Добавить сделку'}
+        </button>
+
+        {editing && (
+          <button
+            type='button'
+            className={styles.cancelButton}
+            onClick={onCancel}
+          >
+            Отмена
+          </button>
+        )}
+      </div>
     </form>
   )
 }
