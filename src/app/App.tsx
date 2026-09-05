@@ -21,6 +21,9 @@ export const App = () => {
               <span className={styles.badge}>{watchlistCount}</span>
             )}
           </NavLink>
+          <NavLink to='/portfolio' className={navLinkClass}>
+            Портфель
+          </NavLink>
         </nav>
       </header>
 

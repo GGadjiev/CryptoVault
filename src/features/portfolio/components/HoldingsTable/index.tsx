@@ -10,7 +10,7 @@ interface HoldingsTableProps {
   onRemove: (id: string) => void
 }
 
-const HoldingsTable = (props: HoldingsTableProps) => {
+export const HoldingsTable = (props: HoldingsTableProps) => {
   const { holdings, onEdit, onRemove } = props
 
   if (holdings.length === 0) return null
