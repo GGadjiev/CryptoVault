@@ -1,2 +1,5 @@
 export { usePortfolioStore } from './store/usePortfolioStore'
 export type { Holding, NewHolding, UpdateHolding } from './types'
+export { usePortfolioSummary } from './hooks/usePortfolioSummary.ts'
+export type { PortfolioSummaryData, PositionSummary } from './types'
+export { PortfolioSummary } from './components/PortfolioSummary'
