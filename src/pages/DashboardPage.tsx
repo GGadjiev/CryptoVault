@@ -7,6 +7,7 @@ import { EmptyState } from "@/shared/components/EmptyState";
 import styles from './DashboardPage.module.scss'
 import {useNavigate} from "react-router-dom";
 import {FavoriteButton} from "@/features/watchlist";
+import {PortfolioBadge} from "@/features/portfolio";
 
 export const DashboardPage = () => {
   const [query, setQuery] = useState("");
@@ -32,7 +33,12 @@ export const DashboardPage = () => {
         <CoinTable
           coins={data}
           onRowClick={(id) => navigate(`/coins/${id}`)}
-          renderExtra={(coin) => <FavoriteButton coinId={coin.id} /> }
+          renderExtra={(coin) => (
+            <>
+              <FavoriteButton coinId={coin.id} />
+              <PortfolioBadge coinId={coin.id} />
+            </>
+          )}
         />
       )}
     </div>

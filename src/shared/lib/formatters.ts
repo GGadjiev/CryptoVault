@@ -47,3 +47,7 @@ const dateFmt = new Intl.DateTimeFormat("ru-RU", {
 export const formatDate = (isoDate: string): string => {
   return dateFmt.format(new Date(isoDate))
 }
+
+export const formatAmount = (value: number): string => {
+  return value.toLocaleString('en-US', { maximumFractionDigits: 4 })
+}
