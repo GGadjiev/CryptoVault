@@ -1,7 +1,8 @@
 import {
+  AllocationList,
   type Holding,
-  type NewHolding,
-  usePortfolioStore
+  type NewHolding, PortfolioSummary,
+  usePortfolioStore, usePortfolioSummary
 } from "@/features/portfolio";
 import {useCoins} from "@/features/market";
 import {useState} from "react";
@@ -17,18 +18,20 @@ export const PortfolioPage = () => {
   const remove = usePortfolioStore(s => s.remove)
   const { data: coins, isLoading: coinsLoading } = useCoins()
 
-  const [edidting, setEidting] = useState<Holding | null>(null)
+  const [editing, setEditing] = useState<Holding | null>(null)
+
+  const summary = usePortfolioSummary();
 
   const handleSubmit = (newHolding: NewHolding) => {
-    if (edidting) {
-      update(edidting.id, {
+    if (editing) {
+      update(editing.id, {
         amount: newHolding.amount,
         buyPrice: newHolding.buyPrice,
       })
     } else {
       add(newHolding)
     }
-    setEidting(null)
+    setEditing(null)
   }
 
   const handleRemove = (id: string) => {
@@ -44,11 +47,11 @@ export const PortfolioPage = () => {
       <section className={styles.formSection}>
         {coins ? (
           <HoldingForm
-            key={edidting ? edidting.id : 'new'}
+            key={editing ? editing.id : 'new'}
             coins={coins}
-            editing={edidting ?? undefined}
+            editing={editing ?? undefined}
             onSubmit={handleSubmit}
-            onCancel={() => setEidting(null)}
+            onCancel={() => setEditing(null)}
           />
         ) : coinsLoading ? (
           <p className={styles.formPlaceholder}>Загружаем список монет...</p>
@@ -56,6 +59,13 @@ export const PortfolioPage = () => {
           <p className={styles.formPlaceholder}>Не удалось загрузить список монет - добавления сделок недоступно.</p>
         )}
       </section>
+
+      {holdings.length > 0 && (
+        <>
+          <PortfolioSummary summary={summary} />
+          <AllocationList summary={summary} />
+        </>
+      )}
 
       {holdings.length === 0 ? (
         <EmptyState
@@ -65,7 +75,7 @@ export const PortfolioPage = () => {
       ) : (
         <HoldingsTable
           holdings={holdings}
-          onEdit={setEidting}
+          onEdit={setEditing}
           onRemove={handleRemove}
         />
       )}
