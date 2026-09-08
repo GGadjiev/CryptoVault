@@ -2,6 +2,7 @@ import type { Coin } from "../../types";
 import { type ReactNode } from "react";
 import { CoinRow } from "../CoinTable/CoinRow";
 import styles from "./CoinTable.module.scss";
+import { memo } from "react";
 
 interface CoinTableProps {
   coins: Coin[]
@@ -9,7 +10,7 @@ interface CoinTableProps {
   onRowClick?: (coinId: string) => void;
 }
 
-export const CoinTable = (props: CoinTableProps) => {
+const CoinTableInner = (props: CoinTableProps) => {
   const {
     coins,
     renderExtra,
@@ -42,3 +43,5 @@ export const CoinTable = (props: CoinTableProps) => {
     </div>
   )
 }
+
+export const CoinTable = memo(CoinTableInner)

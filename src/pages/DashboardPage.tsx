@@ -1,6 +1,6 @@
-import { useState } from "react";
+import {useCallback, useState} from "react";
 import { useDebouncedValue } from "@/shared/hooks/useDebouncedValue";
-import { useCoins, CoinTable, CoinSearch } from '@/features/market'
+import {useCoins, CoinTable, CoinSearch, type Coin} from '@/features/market'
 import { Spinner } from "@/shared/components/Spinner";
 import { ErrorState } from "@/shared/components/ErrorState";
 import { EmptyState } from "@/shared/components/EmptyState";
@@ -14,6 +14,15 @@ export const DashboardPage = () => {
   const debouncedValue = useDebouncedValue(query, 1000);
   const { data, isLoading, error, refetch } = useCoins({ search: debouncedValue })
   const navigate = useNavigate();
+
+  const handleRowClick = useCallback((id: string) => navigate(`/coins/${id}`), [navigate],)
+
+  const renderRowExtra = useCallback((coin: Coin)=> (
+    <>
+      <FavoriteButton coinId={coin.id} />
+      <PortfolioBadge coinId={coin.id} />
+    </>
+  ), [])
 
   return (
     <div className={styles.page}>
@@ -32,13 +41,8 @@ export const DashboardPage = () => {
       {!isLoading && !error && data && data.length > 0 && (
         <CoinTable
           coins={data}
-          onRowClick={(id) => navigate(`/coins/${id}`)}
-          renderExtra={(coin) => (
-            <>
-              <FavoriteButton coinId={coin.id} />
-              <PortfolioBadge coinId={coin.id} />
-            </>
-          )}
+          onRowClick={handleRowClick}
+          renderExtra={renderRowExtra}
         />
       )}
     </div>
