@@ -100,7 +100,7 @@ export const HoldingForm = (props: HoldingFormProps) => {
               ? `${styles.input} ${styles.inputError}`
               : styles.input
           }
-          disabled={!!editing}
+          disabled={editing !== undefined}
           value={form.coinId}
           onChange={event => handleChange('coinId', event.target.value)}
         >

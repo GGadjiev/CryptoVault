@@ -1,12 +1,14 @@
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import {Spinner} from "@/shared/components/Spinner.tsx";
 import {ErrorState} from "@/shared/components/ErrorState.tsx";
-import {useCoin} from "@/features/market";
+import {
+  CoinDetailsView,
+  Sparkline,
+  useCoin,
+  useMarketChart
+} from "@/features/market";
 import styles from './CoinDetailsPage.module.scss'
-import {CoinDetailsView} from "@/features/market/components/CoinDetails/CoinDetailsView.tsx";
 import {useState} from "react";
-import {useMarketChart} from "@/features/market/hooks/useMarketChart.ts";
-import { Sparkline } from "@/features/market/components/Sparkline";
 
 interface BackButtonProps {
   onClick: () => void;

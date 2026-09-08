@@ -1,15 +1,13 @@
 import {
   AllocationList,
-  type Holding,
+  type Holding, HoldingForm, HoldingsTable,
   type NewHolding, PortfolioSummary,
   usePortfolioStore, usePortfolioSummary
 } from "@/features/portfolio";
 import {useCoins} from "@/features/market";
 import {useState} from "react";
 import styles from './PortfolioPage.module.scss'
-import {HoldingForm} from "@/features/portfolio/components/HoldingForm";
 import {EmptyState} from "@/shared/components/EmptyState.tsx";
-import {HoldingsTable} from "@/features/portfolio/components/HoldingsTable";
 
 export const PortfolioPage = () => {
   const holdings = usePortfolioStore(s => s.holdings);
