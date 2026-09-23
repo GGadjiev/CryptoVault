@@ -3,7 +3,6 @@ import { App } from "@/app/App";
 import { DashboardPage } from "@/pages/DashboardPage";
 import { CoinDetailsPage } from "@/pages/CoinDetailsPage";
 import { PortfolioPage } from "@/pages/PortfolioPage";
-import { WatchlistPage } from "@/pages/WatchlistPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 
 export const router = createBrowserRouter([
@@ -22,10 +21,6 @@ export const router = createBrowserRouter([
       {
         path: "portfolio",
         element: <PortfolioPage />
-      },
-      {
-        path: "watchlist",
-        element: <WatchlistPage />
       },
       {
         path: "*",

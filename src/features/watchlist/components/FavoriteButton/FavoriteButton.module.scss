@@ -1,26 +1,12 @@
 .outline {
-  padding: 2px;
-  font-size: 18px;
-  line-height: 1;
-  color: var(--color-border);
-  background: none;
-  border: none;
-  cursor: pointer;
+  padding: 2px; font-size: 15px; line-height: 1;
+  color: rgba(36, 30, 20, 0.3);
+  background: none; border: none; cursor: pointer;
   transition: color 0.15s ease;
 }
-
 .filled {
-  padding: 2px;
-  font-size: 18px;
-  line-height: 1;
-  color: #f5b301;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 0.15s ease;
+  padding: 2px; font-size: 15px; line-height: 1;
+  color: var(--color-text);
+  background: none; border: none; cursor: pointer;
 }
-
-.outline:hover,
-.filled:hover {
-  color: #f5b301;
-}
+.outline:hover, .filled:hover { color: var(--color-text); }

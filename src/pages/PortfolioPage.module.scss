@@ -1,10 +1,8 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  max-width: 1100px;
+  max-width: 1140px;
   margin: 0 auto;
-  padding: 24px;
 }
 
 .title {
@@ -28,4 +26,92 @@
   background-color: var(--color-surface);
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-md);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+  margin-block: 26px 26px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mainColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.mainColumn2 {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 24px;
+  min-width: 0;
+}
+
+.sideColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 16px;
+}
+
+.masthead { text-align: center; padding: 18px 0 16px; }
+.pageTitle {
+  margin: 0;
+  font-family: 'Fraunces', Georgia, serif; font-weight: 900;
+  font-size: clamp(44px, 6.4vw, 70px); line-height: 0.95;
+  letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-text);
+}
+.tagline {
+  margin: 12px 0 0; font-size: 10.5px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--color-text-muted);
+}
+
+.toolbar {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  padding: 12px 0; border-bottom: 2px solid var(--color-text);
+}
+.backLink {
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--color-text-muted); text-decoration: none; padding: 5px 1px;
+  border-bottom: 2px solid transparent; white-space: nowrap;
+}
+.backLink:hover { color: var(--color-text); border-bottom-color: var(--color-text); }
+.toolbarRight { margin-left: auto; }
+
+.pageFooter {
+  margin-top: 30px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-text);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footerNote {
+  max-width: 75%;
+  margin: 0;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+.footerLink {
+  align-self: center;
+  padding: 10px 26px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+  border: 1.5px solid var(--color-text);
+  border-radius: var(--radius-md);
+  text-decoration: none;
 }

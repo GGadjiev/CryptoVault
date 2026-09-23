@@ -1,50 +1,157 @@
-import {useCallback, useState} from "react";
+import { useCallback, useState } from "react";
 import { useDebouncedValue } from "@/shared/hooks/useDebouncedValue";
-import {useCoins, CoinTable, CoinSearch, type Coin} from '@/features/market'
+import { useCoins, CoinTable, CoinSearch, type Coin } from "@/features/market";
 import { Spinner } from "@/shared/components/Spinner";
 import { ErrorState } from "@/shared/components/ErrorState";
 import { EmptyState } from "@/shared/components/EmptyState";
-import styles from './DashboardPage.module.scss'
-import {useNavigate} from "react-router-dom";
-import {FavoriteButton} from "@/features/watchlist";
-import {PortfolioBadge} from "@/features/portfolio";
+import { Link, useNavigate } from "react-router-dom";
+import { CurrencySwitch } from "@/features/settings/components/CurrencySwitch";
+import { FavoriteButton, useWatchlistStore } from "@/features/watchlist";
+import { PortfolioBadge } from "@/features/portfolio";
+import { useSettingsStore } from "@/features/settings";
+import styles from "./DashboardPage.module.scss";
+
+type Tab = "market" | "watchlist";
 
 export const DashboardPage = () => {
-  const [query, setQuery] = useState("");
-  const debouncedValue = useDebouncedValue(query, 1000);
-  const { data, isLoading, error, refetch } = useCoins({ search: debouncedValue })
   const navigate = useNavigate();
 
-  const handleRowClick = useCallback((id: string) => navigate(`/coins/${id}`), [navigate],)
+  const [tab, setTab] = useState<Tab>("market");
+  const isWatchlist = tab === "watchlist";
 
-  const renderRowExtra = useCallback((coin: Coin)=> (
-    <>
-      <FavoriteButton coinId={coin.id} />
-      <PortfolioBadge coinId={coin.id} />
-    </>
-  ), [])
+  const [query, setQuery] = useState("");
+  const debouncedValue = useDebouncedValue(query, 1000);
+
+  const currency = useSettingsStore(s => s.currency);
+
+  const watchlistIds = useWatchlistStore(s => s.ids);
+  const watchlistCount = useWatchlistStore(s => s.ids.length);
+
+  const {
+    data,
+    isLoading,
+    error,
+    refetch,
+    hasMore,
+    loadMore,
+  } = useCoins(
+    isWatchlist
+      ? { ids: watchlistIds, currency }
+      : { search: debouncedValue, currency },
+  );
+
+  const searchActive = !isWatchlist && debouncedValue !== "";
+
+  const handleRowClick = useCallback(
+    (id: string) => navigate(`/coins/${id}`),
+    [navigate],
+  );
+
+  const renderRowExtra = useCallback(
+    (coin: Coin) => <PortfolioBadge coinId={coin.id} />,
+    [],
+  );
+
+  const renderStar = useCallback(
+    (coin: Coin) => <FavoriteButton coinId={coin.id} />,
+    [],
+  );
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.title}>Криптовалютный рынок</h1>
-      
-      <CoinSearch value={query} onChange={setQuery} />
-      
-      {isLoading && <Spinner />}
+      <header className={styles.masthead}>
+        <h1 className={styles.pageTitle}>Рынок</h1>
+        <p className={styles.tagline}>— Ежедневный лист цен цифровых активов —</p>
+      </header>
+
+      <div className="rule-heavy" />
+
+      <section className={styles.toolbar}>
+        <div className={styles.tabs} role="tablist">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={!isWatchlist}
+            className={!isWatchlist ? styles.tabActive : styles.tab}
+            onClick={() => setTab("market")}
+          >
+            Рынок
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={isWatchlist}
+            className={isWatchlist ? styles.tabActive : styles.tab}
+            onClick={() => setTab("watchlist")}
+          >
+            Избранное
+            {watchlistCount > 0 && (
+              (<span className={styles.tabBadge}>{watchlistCount}</span>)
+            )}
+          </button>
+        </div>
+
+        <div className={styles.toolbarSearch}>
+          {!isWatchlist && (
+            <CoinSearch value={query} onChange={setQuery} />
+          )}
+        </div>
+
+        <CurrencySwitch />
+
+        <Link to="/portfolio" className={styles.portfolioButton}>
+          Портфель →
+        </Link>
+      </section>
+
+      {isLoading && data === null && <Spinner />}
 
       {error && <ErrorState message={error.message} onRetry={refetch} />}
 
-      {!isLoading && !error && (!data || data.length === 0) && (
-        <EmptyState title='Ничего не найдено.' description='Попробуй другой запрос.' />
+      {isWatchlist && !isLoading && !error && (!data || data.length === 0) && (
+        <EmptyState
+          title="В избранном пока пусто"
+          description="Добавляй монеты звёздочкой в списке рынка"
+        />
       )}
 
-      {!isLoading && !error && data && data.length > 0 && (
+      {!isWatchlist && !isLoading && !error && (!data || data.length === 0) && (
+        <EmptyState
+          title="Ничего не найдено"
+          description={`По запросу «${debouncedValue}» монет не нашлось. Попробуй другое название.`}
+        />
+      )}
+
+      {!error && data !== null && data.length > 0 && (
         <CoinTable
           coins={data}
+          currency={currency}
           onRowClick={handleRowClick}
+          renderStar={renderStar}
           renderExtra={renderRowExtra}
         />
       )}
+
+      {!error && (
+        <footer className={styles.pageFooter}>
+          <p className={styles.footerNote}>
+            * Капитализация рассчитана по циркулирующему предложению.
+            Источник данных и изображений — CoinGecko.
+            Не является индивидуальной инвестиционной рекомендацией.
+          </p>
+
+          {!isWatchlist && !searchActive && hasMore && (
+            <button
+              type="button"
+              className={styles.moreButton}
+              onClick={loadMore}
+              disabled={isLoading}
+            >
+              {isLoading ? "Загрузка…" : "Показать ещё"}
+            </button>
+          )}
+        </footer>
+      )}
     </div>
-  )
-}
+  );
+};

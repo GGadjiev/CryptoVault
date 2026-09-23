@@ -12,10 +12,13 @@ const toApiError = (error: unknown): ApiError => {
   }
 
   if (error.response === undefined) {
-    return {
-      status: null,
-      message: "Нет соединения с сервером."
+    if (navigator.onLine) {
+      return {
+        status: null,
+        message: "Сервер недоступен или отклонил запрос. Возможно, лимит запросов - подожди минуту.",
+      };
     }
+    return { status: null, message: "Нет соединения. Проверь интернет." };
   }
 
   const status = error.response.status;

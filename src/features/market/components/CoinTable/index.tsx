@@ -3,18 +3,23 @@ import { type ReactNode } from "react";
 import { CoinRow } from "../CoinTable/CoinRow";
 import styles from "./CoinTable.module.scss";
 import { memo } from "react";
+import type {Currency} from "@/shared/lib/formatters.ts";
 
 interface CoinTableProps {
   coins: Coin[]
   renderExtra?: (coin: Coin) => ReactNode
+  renderStar?: (coin: Coin) => ReactNode
   onRowClick?: (coinId: string) => void;
+  currency?: Currency;
 }
 
 const CoinTableInner = (props: CoinTableProps) => {
   const {
     coins,
     renderExtra,
+    renderStar,
     onRowClick,
+    currency,
   } = props
 
   return (
@@ -22,11 +27,13 @@ const CoinTableInner = (props: CoinTableProps) => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Монета</th>
-            <th>Цена</th>
-            <th>24ч %</th>
-            <th>Капитализация</th>
+            <th className={styles.hStar} />
+            <th>№</th>
+            <th>Наименование</th>
+            <th className={styles.num}>Цена</th>
+            <th className={styles.num}>Изм. 24ч</th>
+            <th className={styles.num}>Капитализация</th>
+            <th className={styles.num}>График 7д</th>
           </tr>
         </thead>
         <tbody>
@@ -34,6 +41,8 @@ const CoinTableInner = (props: CoinTableProps) => {
             <CoinRow
               key={coin.id}
               coin={coin}
+              currency={currency}
+              star={renderStar ? renderStar(coin) : undefined}
               extra={renderExtra ? renderExtra(coin) : undefined}
               onClick={onRowClick ? () => onRowClick(coin.id) : undefined}
             />

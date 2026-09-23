@@ -1,102 +1,40 @@
-/* Обёртка: на узких экранах скроллится сама таблица, а не ломается страница */
 .tableWrapper {
   overflow-x: auto;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  background: none;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-  font-variant-numeric: tabular-nums;  /* цифры одной ширины → колонки ровные */
-  white-space: nowrap;                  /* "$67,245.61" не разорвётся на 2 строки */
-}
-
-/* ===== Шапка ===== */
+.table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 .table th {
-  padding: 10px 16px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  height: 40px; padding-inline: 14px;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--color-text-muted);
-  text-align: left;
-  background-color: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
-}
-
-/* Числовые колонки (3–5: Цена, 24ч %, Капитализация) — вправо */
-.table th:nth-child(n + 3) {
-  text-align: right;
-}
-
-/* ===== Ячейки ===== */
-
-.table td {
-  padding: 10px 16px;
-  text-align: right;
-  border-bottom: 1px solid var(--color-border);
-}
-
-/* ...кроме первых двух (№ и Монета) */
-.table td:nth-child(-n + 2) {
+  border-bottom: 1.5px solid var(--hair-strong);
   text-align: left;
 }
+.table th.num, .table td.num { text-align: right; }
 
-/* У последней строки нет границы — её роль играет рамка обёртки */
-.table tbody tr:last-child td {
-  border-bottom: none;
-}
+.table td { padding: 14px; border-bottom: 1px solid var(--color-border); }
+.table tbody tr:last-child td { border-bottom: none; }
+.table tbody tr:hover { background: rgba(36, 30, 20, 0.045); }
 
-/* Аффорданс клика: строки станут ссылками на монету в 2.2 */
-.table tbody tr:hover {
-  background-color: var(--color-bg);
-}
+.rowClickable { cursor: pointer; }
 
-/* ===== Колонка № ===== */
+.rank { color: var(--color-text-muted); font-size: 11px; }
+.starCell { width: 34px; text-align: center; }
+.hStar { width: 34px; }
 
-.rank {
-  width: 1%;  /* классический трюк: колонка сжимается до содержимого */
-  color: var(--color-text-muted);
-}
+.nameCell { display: flex; align-items: center; gap: 13px; min-width: 170px; }
+.nameCell img { flex-shrink: 0; }
+.name { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 16.5px; }
+.symbol { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-left: 12px; }
 
-/* ===== Ячейка «Монета»: лого + имя/тикер + слот extra ===== */
+.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600 }
+.price { font-weight: 600; font-size: 15px; }
+.cap { font-size: 14px; color: #4A4335; }
+.chartCell { width: 120px; text-align: right; }
+.noChart { color: var(--color-text-muted); }
 
-.nameCell {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 200px;
-}
-
-.nameCell img {
-  flex-shrink: 0;
-  border-radius: 50%;
-}
-
-.name {
-  font-weight: 600;
-}
-
-.symbol {
-  margin-left: 6px;
-  font-size: 12px;
-  color: var(--color-text-muted);
-}
-
-/* ===== Тренды — классы из getTrend(): styles[trend] ===== */
-
-.success {
-  color: var(--color-success);
-}
-
-.danger {
-  color: var(--color-danger);
-}
-
-.muted {
-  color: var(--color-text-muted);
-}
+.success { color: var(--color-success); }
+.danger { color: var(--color-danger); }
+.muted { color: var(--color-text-muted); }

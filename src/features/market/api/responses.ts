@@ -7,6 +7,7 @@ export interface CoinGeckoMarketRow {
   price_change_percentage_24h: number;
   market_cap: number;
   market_cap_rank: number;
+  sparkline_in_7d: { price: number[] }
 }
 
 export interface CoinGeckoSearchResult {
@@ -40,13 +41,29 @@ export interface CoinGeckoDetailsResponse {
     blockchain_site: string[];
   }
   market_data: {
-    current_price: { usd: number; };
-    high_24h: { usd: number };
-    low_24h: { usd: number };
-    market_cap: { usd: number };
-    ath: { usd: number };
-    atl: { usd: number };
+    current_price: CoinGeckoCurrencyMap;
+    high_24h: { usd: number; rub: number; eur: number };
+    low_24h: { usd: number; rub: number; eur: number };
+    market_cap: { usd: number; rub: number; eur: number };
+    ath: { usd: number; rub: number; eur: number };
+    atl: { usd: number; rub: number; eur: number };
+    total_volume: { usd: number; rub: number; eur: number };
     price_change_percentage_24h: number | null;
-    total_volume: { usd: number };
+    ath_change_percentage: CoinGeckoCurrencyMap;
+    atl_change_percentage: CoinGeckoCurrencyMap;
+    circulating_supply: number | null;
+    max_supply: number | null;
+  }
+}
+
+export interface CoinGeckoCurrencyMap {
+  usd: number;
+  rub: number;
+  eur: number;
+}
+
+export interface CoinGeckoGlobalResponse {
+  data: {
+    active_cryptocurrencies: number;
   }
 }

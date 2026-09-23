@@ -3,10 +3,11 @@ import styles from "./CoinDetails.module.scss"
 
 interface DescriptionBlockProps {
   text: string
+  subtitle?: string
 }
 
 export const DescriptionBlock = (props: DescriptionBlockProps) => {
-  const { text } = props;
+  const { text, subtitle } = props;
 
   const [expanded, setExpanded] = useState(false);
 
@@ -16,19 +17,28 @@ export const DescriptionBlock = (props: DescriptionBlockProps) => {
 
   return (
     <section className={styles.description}>
-      <h2 className={styles.sectionTitle}>О монете</h2>
-      <p className={
-        expanded ? styles.descriptionText : `${styles.descriptionText} ${styles.descriptionCollapsed}`
-      }>
+      <div className={styles.artHead}>
+        <h2 className={styles.artTitle}>О валюте</h2>
+        {subtitle && <span className={styles.subtitle}>{subtitle}</span>}
+      </div>
+
+      <p
+        className={
+          expanded
+            ? styles.descriptionText
+            : `${styles.descriptionText} ${styles.descriptionCollapsed}`
+        }
+      >
         {text}
       </p>
+
       {isLong && (
         <button
-          type='button'
+          type="button"
           className={styles.descriptionToggle}
-          onClick={() => setExpanded(v => !v)}
+          onClick={() => setExpanded((v) => !v)}
         >
-          {expanded ? 'Свернуть' : 'Читать полностью'}
+          {expanded ? "Свернуть" : "Читать полностью"}
         </button>
       )}
     </section>

@@ -8,17 +8,23 @@ import {useCoins} from "@/features/market";
 import {useState} from "react";
 import styles from './PortfolioPage.module.scss'
 import {EmptyState} from "@/shared/components/EmptyState.tsx";
+import {useSettingsStore} from "@/features/settings";
+import {Link} from "react-router-dom";
+import {CurrencySwitch} from "@/features/settings/components/CurrencySwitch";
 
 export const PortfolioPage = () => {
   const holdings = usePortfolioStore(s => s.holdings);
   const add = usePortfolioStore(s => s.add)
   const update = usePortfolioStore(s => s.update)
   const remove = usePortfolioStore(s => s.remove)
-  const { data: coins, isLoading: coinsLoading } = useCoins()
 
   const [editing, setEditing] = useState<Holding | null>(null)
 
-  const summary = usePortfolioSummary();
+  const currency = useSettingsStore(s => s.currency)
+
+  const { data: coins, isLoading: coinsLoading } = useCoins({ currency })
+
+  const summary = usePortfolioSummary(holdings, coins ?? [], currency);
 
   const handleSubmit = (newHolding: NewHolding) => {
     if (editing) {
@@ -38,45 +44,82 @@ export const PortfolioPage = () => {
     }
   }
 
+  const noRates = summary.missingPrice.length;
+
   return (
     <div className={styles.page}>
-      <h1 className={styles.title}>Портфель</h1>
+      <header className={styles.masthead}>
+        <h1 className={styles.pageTitle}>Портфель</h1>
+        <p className={styles.tagline}>— Личная книга учёта читателя —</p>
+      </header>
 
-      <section className={styles.formSection}>
-        {coins ? (
-          <HoldingForm
-            key={editing ? editing.id : 'new'}
-            coins={coins}
-            editing={editing ?? undefined}
-            onSubmit={handleSubmit}
-            onCancel={() => setEditing(null)}
-          />
-        ) : coinsLoading ? (
-          <p className={styles.formPlaceholder}>Загружаем список монет...</p>
-        ) : (
-          <p className={styles.formPlaceholder}>Не удалось загрузить список монет - добавления сделок недоступно.</p>
-        )}
+      <div className="rule-heavy" />
+
+      <section className={styles.toolbar}>
+        <Link to="/" className="linkButton">← Весь рынок</Link>
+        <div className={styles.toolbarRight}>
+          <CurrencySwitch />
+        </div>
       </section>
 
       {holdings.length > 0 && (
-        <>
-          <PortfolioSummary summary={summary} />
-          <AllocationList summary={summary} />
-        </>
+        <PortfolioSummary summary={summary} currency={currency} />
       )}
 
-      {holdings.length === 0 ? (
-        <EmptyState
-          title='Портфель пока пуст'
-          description='Добавь первую сделку - и здесь появится твоя статистика.'
-        />
-      ) : (
-        <HoldingsTable
-          holdings={holdings}
-          onEdit={setEditing}
-          onRemove={handleRemove}
-        />
-      )}
+      <div className={styles.content}>
+        {holdings.length > 0 && (
+          <div className={styles.mainColumn}>
+            <AllocationList summary={summary} currency={currency} />
+          </div>
+        )}
+
+        {holdings.length === 0 && (
+          <div className={styles.mainColumn2}>
+            <EmptyState
+              title="Портфель пока пуст"
+              description="Добавь первую сделку - и здесь появится твоя статистика."
+            />
+          </div>
+        )}
+
+
+        <div className={styles.sideColumn}>
+          {coins ? (
+            <HoldingForm
+              key={editing ? editing.id : "new"}
+              coins={coins}
+              currency={currency}
+              editing={editing ?? undefined}
+              onSubmit={handleSubmit}
+              onCancel={() => setEditing(null)}
+            />
+          ) : coinsLoading ? (
+            <p className={styles.formPlaceholder}>Загружаем список монет...</p>
+          ) : (
+            <p className={styles.formPlaceholder}>
+              Не удалось загрузить список монет — добавление сделок недоступно.
+            </p>
+          )}
+        </div>
+      </div>
+
+      <HoldingsTable
+        holdings={holdings}
+        coins={coins ?? []}
+        currency={currency}
+        noRates={noRates}
+        onEdit={setEditing}
+        onRemove={handleRemove}
+      />
+
+      <footer className={styles.pageFooter}>
+        <p className={styles.footerNote}>
+          * Оценка стоимости — по котировкам текущего выпуска.
+          Источник данных и изображений — CoinGecko.
+          Не является индивидуальной инвестиционной рекомендацией.
+        </p>
+        <Link to="/" className="linkButton">← К листу котировок</Link>
+      </footer>
     </div>
   );
 }

@@ -1,24 +1,13 @@
 .search {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.label {
-  font-size: 13px;
+  display: flex; align-items: center; gap: 9px;
+  border-bottom: 1.5px solid var(--ink-soft);
+  padding: 3px 2px 6px;
   color: var(--color-text-muted);
 }
-
+.search:focus-within { border-bottom-color: var(--color-text); }
 .input {
-  padding: 10px 14px;
-  font-size: 14px;
-  background-color: var(--color-surface);
+  flex: 1; background: none; border: none; outline: none;
+  font: italic 13px 'IBM Plex Mono', monospace;
   color: var(--color-text);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  outline: none;
 }
-
-.input:focus {
-  border-color: var(--color-primary);
-}
+.input::placeholder { color: var(--color-text-muted); }

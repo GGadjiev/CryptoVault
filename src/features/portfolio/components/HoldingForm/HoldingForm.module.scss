@@ -1,102 +1,68 @@
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 24px;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+.coupon {
+  border: 1.5px dashed var(--color-text);
+  padding: 16px 16px 14px;
+  background: none; position: relative;
   border-radius: var(--radius-md);
-  max-width: 480px;
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.coupon::before {
+  content: '✂'; position: absolute; top: -12px; left: 14px;
+  background: var(--color-bg); padding: 0 6px;
+  color: var(--color-text-muted); font-size: 13px;
 }
 
-.label {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-text);
+.couponTitle {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
 }
+
+.couponSub {
+  text-align: center;
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin-bottom: 20px;
+}
+
+.field { margin-bottom: 20px; display: block; }
+.label { display: block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 5px; }
 
 .input {
-  padding: 10px 14px;
-  font-size: 14px;
-  font-family: inherit;
-  color: var(--color-text);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  outline: none;
-  transition: border-color 0.15s ease;
+  width: 100%; background: none; border: none; outline: none;
+  font: 600 13px 'IBM Plex Mono', monospace; color: var(--color-text);
+  padding: 4px 0 6px;
+  border-bottom: 1.5px solid var(--ink-soft);
 }
+.field:focus-within .input { border-bottom-color: var(--color-text); }
+.input::placeholder { color: var(--color-text-muted); font-weight: 400; font-style: italic; }
 
-.input:focus {
-  border-color: var(--color-primary);
-}
+.selectWrap { position: relative; }
+.selectWrap::after { content: '▾'; position: absolute; right: 2px; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); pointer-events: none; }
+.selectWrap select { cursor: pointer; appearance: none; -webkit-appearance: none; padding-right: 20px; }
+.selectWrap select:disabled { color: var(--ink-soft); border-bottom-style: dotted; }
 
-.inputError {
-  border-color: var(--color-danger);
-}
+.inputError, .field:focus-within .inputError { border-bottom-color: var(--color-danger); }
+.error { font-size: 11px; color: var(--color-danger); font-style: italic; }
+.autofillNote { display: block; font-size: 10px; color: var(--color-text-muted); margin-top: 3px; }
 
-.inputError:focus {
-  border-color: var(--color-danger);
-}
-
-.error {
-  font-size: 12px;
-  line-height: 1.4;
-  color: var(--color-danger);
-}
-
+.actions { display: flex; gap: 8px; margin-top: 16px; }
 .submit {
-  align-self: flex-start;
-  padding: 10px 24px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #fff;
-  background-color: var(--color-primary);
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: background-color 0.15s ease;
+  flex: 1; font: 700 11px 'IBM Plex Mono', monospace; letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 10px 26px; border: 1.5px solid var(--color-text);
+  background: none; color: var(--color-text); border-radius: var(--radius-md);
+  transition: background-color 0.15s, color 0.15s;
 }
-
-.submit:hover {
-  background-color: var(--color-primary-hover);
-}
-
-.submit:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-.submit:active {
-  transform: translateY(1px);
-}
-
-.hint {
-  font-size: 12px;
-  color: var(--color-text-muted);
-}
-
-.actions {
-  display: flex;
-  gap: 8px;
-}
-
+.submit:hover { background: var(--color-text); color: var(--color-bg); }
 .cancelButton {
-  padding: 10px 16px;
-  font-size: 14px;
-  color: var(--color-text);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  cursor: pointer;
+  font: 500 11px 'IBM Plex Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 10px 16px; background: none; border: 1.5px solid var(--color-border);
+  color: var(--color-text-muted); border-radius: var(--radius-md);
 }
+.cancelButton:hover { color: var(--color-text); border-color: var(--color-text); }
 
-.cancelButton:hover {
-  border-color: var(--color-text-muted);
-}
+.couponFine { margin: 18px 0 0; font: italic 10.5px 'Fraunces', Georgia, serif; color: var(--color-text-muted); text-align: center; }
+.message { margin: 9px 0 0; text-align: center; font: italic 12.5px 'Fraunces', Georgia, serif; color: var(--color-text); }

@@ -12,6 +12,8 @@ export interface Coin {
   priceChange24h: number;
   marketCap: number;
   marketCapRank: number;
+  sparkline7d: number[];
+
 }
 
 export interface CoinDetails {
@@ -31,6 +33,11 @@ export interface CoinDetails {
   ath: number
   atl: number;
   priceChange24h: number | null;
+  athChangePercentage: number | null;
+  atlChangePercentage: number | null;
+  circulatingSupply: number | null;
+  maxSupply: number | null;
+  explorerUrl: string | null;
 }
 
 export type ChartPoint = [timestamp: number, price: number];

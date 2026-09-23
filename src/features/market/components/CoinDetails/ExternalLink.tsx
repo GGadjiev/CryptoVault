@@ -1,28 +1,50 @@
-import styles from './CoinDetails.module.scss'
+import styles from "./CoinDetails.module.scss";
 
-interface ExternalLinkProps {
+interface ExternalLinksProps {
   homepageUrl: string | null;
+  explorerUrl: string | null;
 }
 
-export const ExternalLink = (props: ExternalLinkProps) => {
-  const { homepageUrl } = props
+function host(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+}
 
-  if (!homepageUrl) return null
+function isSafe(url: string): boolean {
+  return url.startsWith("https://") || url.startsWith("http://");
+}
 
-  const isSafe = homepageUrl.startsWith('https://') || homepageUrl.startsWith('http://')
-  if (!isSafe) return null
+export const ExternalLink = (props: ExternalLinksProps) => {
+  const { homepageUrl, explorerUrl } = props;
+
+  const links: { label: string; url: string }[] = [];
+  if (homepageUrl && isSafe(homepageUrl)) {
+    links.push({ label: "Сайт", url: homepageUrl });
+  }
+  if (explorerUrl && isSafe(explorerUrl)) {
+    links.push({ label: "Обозреватель", url: explorerUrl });
+  }
+
+  if (links.length === 0) return null;
 
   return (
-    <section className={styles.links}>
-      <h2 className={styles.sectionTitle}>Ссылки</h2>
-      <a
-        className={styles.link}
-        href={homepageUrl}
-        target='_blank'
-        rel='noreferrer noopener'
-      >
-        Официальный сайт
-      </a>
-    </section>
-  )
-}
+    <div className={styles.addr}>
+      <div className={styles.addrTitle}>Адреса</div>
+
+      {links.map(({ label, url }) => (
+        <a
+          key={url}
+          className={styles.addrLink}
+          href={url}
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          {label}: {host(url)} →
+        </a>
+      ))}
+    </div>
+  );
+};

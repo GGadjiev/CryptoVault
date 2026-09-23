@@ -1,33 +1,44 @@
 import type { Coin } from "@/features/market";
-import type {Holding, NewHolding} from "@/features/portfolio";
-import {useState} from "react";
-import styles from './HoldingForm.module.scss'
+import type { Holding, NewHolding } from "@/features/portfolio";
+import { useState } from "react";
+import styles from './HoldingForm.module.scss';
+import { type Currency, getCurrencySymbol } from "@/shared/lib/formatters";
 
 interface HoldingFormProps {
-  coins: Coin[],
-  onSubmit: (holding: NewHolding) => void
-
-  editing?: Holding
-  onCancel?: () => void
+  coins: Coin[];
+  onSubmit: (holding: NewHolding) => void;
+  editing?: Holding;
+  onCancel?: () => void;
+  currency: Currency;
 }
 
 interface FormState {
-  coinId: string
-  amount: string
-  buyPrice: string
+  coinId: string;
+  amount: string;
+  buyPrice: string;
+  autofilled: boolean;
 }
 
-type FormErrors = Partial<Record<keyof FormState, string>>
+type FormErrors = Partial<Record<keyof FormState, string>>;
 
 export const HoldingForm = (props: HoldingFormProps) => {
-  const { coins, onSubmit, editing, onCancel } = props
+  const { coins, onSubmit, editing, onCancel, currency } = props;
+
+  const effectiveCurrency: Currency = editing?.buyCurrency ?? currency;
 
   const [form, setForm] = useState<FormState>(
     editing
-      ? { coinId: editing.coinId, amount: String(editing.amount), buyPrice: String(editing.buyPrice) }
-      : { coinId: '', amount: '', buyPrice: '', }
-  )
-  const [errors, setErrors] = useState<FormErrors>({})
+      ? {
+        coinId: editing.coinId,
+        amount: String(editing.amount),
+        buyPrice: String(editing.buyPrice),
+        autofilled: false,
+      }
+      : { coinId: '', amount: '', buyPrice: '', autofilled: false }
+  );
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  const [message, setMessage] = useState<string | null>(null);
 
   const validate = (form: FormState): FormErrors => {
     const errors: FormErrors = {};
@@ -55,24 +66,46 @@ export const HoldingForm = (props: HoldingFormProps) => {
     }
 
     return errors;
-  }
+  };
 
   const handleChange = (field: keyof FormState, value: string) => {
-    setForm(prev => ({ ...prev, [field]: value }))
-    setErrors(prev => ({ ...prev, [field]: undefined }))
-  }
+    setForm(prev => ({
+      ...prev,
+      [field]: value,
+      autofilled: field === 'buyPrice' ? false : prev.autofilled,
+    }));
+    setErrors(prev => ({ ...prev, [field]: undefined }));
+    setMessage(null);
+  };
+
+  const handleCoinChange = (coinId: string) => {
+    const coin = coins.find(c => c.id === coinId);
+
+    const shouldAutofill = coin !== undefined && (form.buyPrice === '' || form.autofilled);
+
+    setForm(prev => ({
+      ...prev,
+      coinId,
+      buyPrice: shouldAutofill
+        ? String(coin!.currentPrice)
+        : prev.buyPrice,
+      autofilled: shouldAutofill,
+    }));
+    setErrors(prev => ({ ...prev, coinId: undefined }));
+    setMessage(null);
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const validation = validate(form)
+    const validation = validate(form);
 
     if (Object.keys(validation).length > 0) {
-      setErrors(validation)
-      return
+      setErrors(validation);
+      return;
     }
 
-    const selectedCoin = coins.find(coin => coin.id === form.coinId)
+    const selectedCoin = coins.find(coin => coin.id === form.coinId);
 
     onSubmit({
       coinId: form.coinId,
@@ -81,17 +114,24 @@ export const HoldingForm = (props: HoldingFormProps) => {
       coinImage: selectedCoin?.image ?? '',
       amount: Number(form.amount),
       buyPrice: Number(form.buyPrice),
-    })
+      buyCurrency: effectiveCurrency,
+    });
 
-    setForm({ coinId: '', amount: '', buyPrice: '', })
-    setErrors({})
-  }
+    setMessage(
+      editing
+        ? `Запись сохранена: ${selectedCoin?.name ?? 'монета'} × ${form.amount}.`
+        : `Записано в книгу: ${selectedCoin?.name ?? 'монета'} × ${form.amount} по ${form.buyPrice} ${getCurrencySymbol(effectiveCurrency)}.`
+    );
+
+    setForm({ coinId: '', amount: '', buyPrice: '', autofilled: false });
+    setErrors({});
+  };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={styles.form}
-    >
+    <form onSubmit={handleSubmit} className={styles.coupon}>
+      <div className={styles.couponTitle}>Купон заявки</div>
+      <div className={styles.couponSub}>внесение записи в книгу учёта</div>
+
       <label className={styles.field}>
         <span className={styles.label}>Монета</span>
         <select
@@ -102,12 +142,12 @@ export const HoldingForm = (props: HoldingFormProps) => {
           }
           disabled={editing !== undefined}
           value={form.coinId}
-          onChange={event => handleChange('coinId', event.target.value)}
+          onChange={event => handleCoinChange(event.target.value)}
         >
-          <option value="" disabled>- выбери монету -</option>
+          <option value="" disabled>— выбери монету —</option>
           {coins.map((coin) => (
             <option key={coin.id} value={coin.id}>
-              {coin.name} ({coin.symbol.toUpperCase()})
+              {coin.name} · {coin.symbol.toUpperCase()}
             </option>
           ))}
         </select>
@@ -126,13 +166,15 @@ export const HoldingForm = (props: HoldingFormProps) => {
           inputMode='decimal'
           value={form.amount}
           onChange={event => handleChange('amount', event.target.value)}
-          placeholder='Например: 0.5'
+          placeholder='0,00'
         />
         {errors.amount && <span className={styles.error}>{errors.amount}</span>}
       </label>
 
       <label className={styles.field}>
-        <span className={styles.label}>Цена покупки, $</span>
+        <span className={styles.label}>
+          Цена покупки, {getCurrencySymbol(effectiveCurrency)}
+        </span>
         <input
           className={
             errors.buyPrice
@@ -143,17 +185,17 @@ export const HoldingForm = (props: HoldingFormProps) => {
           inputMode='decimal'
           value={form.buyPrice}
           onChange={event => handleChange('buyPrice', event.target.value)}
-          placeholder='Например: 0.5'
+          placeholder='0,00'
         />
+        {form.autofilled && (
+          <span className={styles.autofillNote}>курс подставлен текущий</span>
+        )}
         {errors.buyPrice && <span className={styles.error}>{errors.buyPrice}</span>}
       </label>
 
       <div className={styles.actions}>
-        <button
-          type='submit'
-          className={styles.submit}
-        >
-          {editing ? 'Сохранить' : 'Добавить сделку'}
+        <button type='submit' className={styles.submit}>
+          {editing ? 'Сохранить' : 'Внести запись'}
         </button>
 
         {editing && (
@@ -166,6 +208,13 @@ export const HoldingForm = (props: HoldingFormProps) => {
           </button>
         )}
       </div>
+
+      <p className={styles.couponFine}>
+        графы заполняются в {getCurrencySymbol(effectiveCurrency)}; <br/>
+        курс подставляется текущий
+      </p>
+
+      {message && <p className={styles.message}>{message}</p>}
     </form>
-  )
-}
+  );
+};

@@ -15,9 +15,18 @@ interface PortfolioState {
   remove: (id: string) => void
 }
 
+const loadHoldings = (): Holding[] => {
+  const raw = readStorage(STORAGE_KEY, [] as unknown[])
+  return raw
+    .filter((h): h is Record<string, unknown> => typeof h === "object" && h !== null)
+    .map((h) => ({
+      ...(h as Omit<Holding, 'buyCurrency'>), buyCurrency: 'USD'
+    }));
+}
+
 export const usePortfolioStore = create<PortfolioState>()(
   (set) => ({
-    holdings: readStorage(STORAGE_KEY, [] as Holding[]),
+    holdings: loadHoldings(),
 
     add: (newHolding) => {
       set((state) => {

@@ -1,94 +1,119 @@
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {Spinner} from "@/shared/components/Spinner.tsx";
 import {ErrorState} from "@/shared/components/ErrorState.tsx";
 import {
-  CoinDetailsView,
-  Sparkline,
+  CoinHeader, DescriptionBlock, ExternalLink,
+  PriceChart,
   useCoin,
   useMarketChart
 } from "@/features/market";
 import styles from './CoinDetailsPage.module.scss'
 import {useState} from "react";
-
-interface BackButtonProps {
-  onClick: () => void;
-}
+import {useSettingsStore} from "@/features/settings";
+import type {Currency} from "@/shared/lib/formatters.ts";
+import {
+  StatsGrid
+} from "@/features/market/components/CoinDetails/StatsGrid.tsx";
+import {FavoriteButton} from "@/features/watchlist";
+import {CurrencySwitch} from "@/features/settings/components/CurrencySwitch";
 
 interface ChartSectionProps {
-  coinId: string;
-  trend: boolean
+  coinId: string
+  currency: Currency
 }
 
 export const CoinDetailsPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const coinId = id ?? ''
+  const coinId = id ?? '';
 
-  const { data, isLoading, error, refetch } = useCoin(coinId)
-
-  const goBack = () => {
-    if (location.key !== 'default') {
-      navigate(-1)
-    } else {
-      navigate('/')
-    }
-  }
+  const currency = useSettingsStore(s => s.currency);
+  const { data, isLoading, error, refetch } = useCoin(coinId, currency);
 
   if (isLoading) {
     return (
       <div className={styles.page}>
-        <BackButton onClick={goBack} />
+        <PageToolbar />
         <Spinner />
       </div>
-    )
+    );
   }
 
   if (error) {
     return (
       <div className={styles.page}>
-        <BackButton onClick={goBack} />
+        <PageToolbar />
         {error.status === 404 ? (
           <div className={styles.notFound}>
             <h1 className={styles.notFoundTitle}>Монета не найдена</h1>
-            <p className={styles.notFoundText}>
-              Возможно, она была удалена или ссылка не верна.
-            </p>
+            <p className={styles.notFoundText}>Возможно, она была удалена или ссылка не верна.</p>
             <Link to='/' className={styles.notFoundLink}>На главную</Link>
           </div>
         ) : (
           <ErrorState message={error.message} onRetry={refetch} />
         )}
       </div>
-    )
+    );
   }
 
   if (!data) return null;
 
   return (
     <div className={styles.page}>
-      <BackButton onClick={goBack} />
-      <CoinDetailsView details={data} />
-      <ChartSection coinId={data.id} trend={(data.priceChange24h ?? 0) >= 0} />
+      <CoinHeader
+        details={data}
+        currency={currency}
+        actions={<FavoriteButton coinId={data.id} />}
+      />
+
+      <div className="rule-heavy" />
+
+      <PageToolbar />
+
+      <div className={styles.content}>
+        <div className={styles.mainColumn}>
+          <ChartSection coinId={data.id} currency={currency} />
+          <DescriptionBlock
+            text={data.description}
+            subtitle={`${data.name} · ${data.symbol.toUpperCase()}`}
+          />
+        </div>
+        <div className={styles.sideColumn}>
+          <div className={styles.factsBox}>
+            <div className={styles.factsTitle}>Справка эмитента</div>
+            <StatsGrid details={data} currency={currency} />
+            <ExternalLink homepageUrl={data.homepageUrl} explorerUrl={data.explorerUrl} />
+          </div>
+        </div>
+      </div>
+
+      <footer className={styles.pageFooter}>
+        <p className={styles.footerNote}>
+          * Капитализация рассчитана по циркулирующему предложению. Источник данных — CoinGecko.
+          Не является индивидуальной инвестиционной рекомендацией.
+        </p>
+        <Link to="/" className="linkButton">← К листу котировок</Link>
+      </footer>
     </div>
-  )
-}
+  );
+};
 
-const BackButton = (props: BackButtonProps) => {
-  const { onClick } = props;
-
+function PageToolbar() {
   return (
-    <button type='button' onClick={onClick} className={styles.backButton}>
-      Назад
-    </button>
-  )
+    <div className={styles.toolbar}>
+      <Link to="/" className="linkButton">← Весь рынок</Link>
+      <div className={styles.toolbarRight}>
+        <CurrencySwitch />
+        <Link to="/portfolio" className="linkButton">Портфель →</Link>
+      </div>
+    </div>
+  );
 }
 
 const ChartSection = (props: ChartSectionProps) => {
-  const { coinId, trend } = props;
+  const { coinId, currency } = props;
 
   const [days, setDays] = useState(7)
-  const { data, isLoading, error } = useMarketChart(coinId, days)
+  const { data, isLoading, error } = useMarketChart(coinId, currency, days)
 
   return (
     <section className={styles.chartSection}>
@@ -110,10 +135,7 @@ const ChartSection = (props: ChartSectionProps) => {
       {isLoading && <Spinner />}
       {error && <ErrorState message={error.message} />}
       {data && data.length > 1 && (
-        <Sparkline
-          prices={data.map(([, price]) => price)}
-          positive={trend}
-        />
+        <PriceChart points={data} currency={currency} />
       )}
     </section>
   )

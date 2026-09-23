@@ -1,3 +1,5 @@
+import type {Currency} from "@/shared/lib/formatters.ts";
+
 export interface Holding {
   id: string;
   coinId: string;
@@ -6,6 +8,7 @@ export interface Holding {
   coinImage: string;
   amount: number;
   buyPrice: number;
+  buyCurrency: Currency
   createdAt: string;
 }
 
@@ -21,6 +24,7 @@ export interface NewHolding {
   coinImage: string;
   amount: number;
   buyPrice: number;
+  buyCurrency: Currency;
 }
 
 export interface PositionSummary {
@@ -40,6 +44,7 @@ export interface PositionSummary {
 export interface PortfolioSummaryData {
   positions: PositionSummary[];
   missingPrice: Holding[];
+  foreignCurrency: Holding[];
   totalInvested: number;
   totalValue: number | null;
   pnl: number | null;

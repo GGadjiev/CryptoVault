@@ -1,14 +1,19 @@
 import type { ChartPoint, Coin, CoinDetails } from "../types";
 import { client } from "../api/client";
 import type {
-  CoinGeckoDetailsResponse,
+  CoinGeckoCurrencyMap,
+  CoinGeckoDetailsResponse, CoinGeckoGlobalResponse,
   CoinGeckoMarketRow,
   CoinGeckoSearchResponse
 } from "./responses";
+import type {Currency} from "@/shared/lib/formatters.ts";
 
-interface fetchMarketsOptions {
+interface FetchMarketsOptions {
   signal?: AbortSignal,
   ids?: string[],
+  currency?: Currency,
+  page?: number,
+  withSparkline?: boolean,
 }
 
 const toCoin = (row: CoinGeckoMarketRow): Coin => {
@@ -21,12 +26,16 @@ const toCoin = (row: CoinGeckoMarketRow): Coin => {
     priceChange24h: row.price_change_percentage_24h,
     marketCap: row.market_cap,
     marketCapRank: row.market_cap_rank,
+    sparkline7d: row.sparkline_in_7d?.price ?? []
   }
 }
 
-const toCoinDetails = (raw: CoinGeckoDetailsResponse): CoinDetails => {
+const toCoinDetails = (raw: CoinGeckoDetailsResponse, currency: Currency): CoinDetails => {
+  const c = raw.market_data
   const firstHomepage = raw.links.homepage.find(url => url.trim() !== '')
   const cleanDescription = raw.description.en.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  const apiCurrency = currency.toLowerCase() as keyof CoinGeckoCurrencyMap;
+  const firstExplorer = raw.links.blockchain_site.find(url => url.trim() !== '')
 
   return {
     id: raw.id,
@@ -37,26 +46,32 @@ const toCoinDetails = (raw: CoinGeckoDetailsResponse): CoinDetails => {
     homepageUrl: firstHomepage ?? null,
     hashingAlgorithm: raw.hashing_algorithm,
     genesisDate: raw.genesis_date,
-    currentPrice: raw.market_data.current_price.usd,
-    high24h: raw.market_data.high_24h.usd,
-    low24h: raw.market_data.low_24h.usd,
-    marketCap: raw.market_data.market_cap.usd,
-    totalVolume: raw.market_data.total_volume.usd,
-    ath: raw.market_data.ath.usd,
-    atl: raw.market_data.atl.usd,
-    priceChange24h: raw.market_data.price_change_percentage_24h
+    currentPrice: c.current_price[apiCurrency],
+    high24h: c.high_24h[apiCurrency],
+    low24h: c.low_24h[apiCurrency],
+    marketCap: c.market_cap[apiCurrency],
+    totalVolume: c.total_volume[apiCurrency],
+    ath: c.ath[apiCurrency],
+    atl: c.atl[apiCurrency],
+    priceChange24h: c.price_change_percentage_24h,
+    athChangePercentage: c.ath_change_percentage[apiCurrency],
+    atlChangePercentage: c.atl_change_percentage[apiCurrency],
+    circulatingSupply: c.circulating_supply,
+    maxSupply: c.max_supply,
+    explorerUrl: firstExplorer ?? null,
   }
 }
 
-export const fetchMarkets = async (options: fetchMarketsOptions): Promise<Coin[]> => {
-  const { signal, ids } = options
+export const fetchMarkets = async (options: FetchMarketsOptions): Promise<Coin[]> => {
+  const { signal, ids, currency = 'USD', page = 1, withSparkline = true } = options
   const response = await client.get<CoinGeckoMarketRow[]>('/coins/markets', {
     params: {
-      vs_currency: "usd",
+      vs_currency: currency,
       order: "market_cap_desc",
       per_page: 50,
-      page: 1,
+      page,
       ...(ids && ids.length > 0 ? { ids: ids.join(',') } : {}),
+      sparkline: withSparkline
     },
     signal,
   })
@@ -71,12 +86,13 @@ export const fetchCoinIds = async (query: string, signal?: AbortSignal): Promise
   return response.data.coins.map(coin => coin.id)
 }
 
-export const fetchMarketChart = async (coinId: string, days: number, signal?: AbortSignal): Promise<ChartPoint[]> => {
+export const fetchMarketChart = async (coinId: string, currency: Currency, days: number, signal?: AbortSignal): Promise<ChartPoint[]> => {
+  const apiCurrency = currency.toLowerCase();
   const response = await client.get<{ prices: [number, number][] }>(
     `/coins/${coinId}/market_chart`,
     {
       params: {
-        vs_currency: "usd",
+        vs_currency: apiCurrency,
         days
       },
       signal,
@@ -85,7 +101,21 @@ export const fetchMarketChart = async (coinId: string, days: number, signal?: Ab
   return response.data.prices
 }
 
-export const fetchCoinDetails = async (coinId: string, signal?: AbortSignal): Promise<CoinDetails> => {
+let globalCache: { value: number; timestamp: number } | null = null;
+const GLOBAL_TTL = 30 * 60 * 1000;
+
+export async function fetchMarketGlobal(signal?: AbortSignal): Promise<number> {
+  if (globalCache && Date.now() - globalCache.timestamp < GLOBAL_TTL) {
+    return globalCache.value;
+  }
+
+  const response = await client.get<CoinGeckoGlobalResponse>("/global", { signal });
+  const value = response.data.data.active_cryptocurrencies;
+  globalCache = { value, timestamp: Date.now() };
+  return value;
+}
+
+export const fetchCoinDetails = async (coinId: string, currency: Currency, signal?: AbortSignal): Promise<CoinDetails> => {
   const response = await client.get<CoinGeckoDetailsResponse>(
     `/coins/${coinId}`,
     {
@@ -99,5 +129,5 @@ export const fetchCoinDetails = async (coinId: string, signal?: AbortSignal): Pr
       signal,
     }
   )
-  return toCoinDetails(response.data)
+  return toCoinDetails(response.data, currency)
 }

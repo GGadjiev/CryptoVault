@@ -2,11 +2,11 @@ import type {
   Holding,
   PortfolioSummaryData, PositionSummary
 } from "@/features/portfolio/types.ts";
-import {usePortfolioStore} from "@/features/portfolio";
-import {type Coin, useCoins} from "@/features/market";
+import {type Coin} from "@/features/market";
 import {useMemo} from "react";
+import type {Currency} from "@/shared/lib/formatters.ts";
 
-const buildSummary = (holdings: Holding[], coins: Coin[]): PortfolioSummaryData => {
+const buildSummary = (holdings: Holding[], coins: Coin[], currency: Currency): PortfolioSummaryData => {
   const priceMap = new Map<string, Coin>()
   for (const coin of coins) {
     priceMap.set(coin.id, coin);
@@ -20,12 +20,18 @@ const buildSummary = (holdings: Holding[], coins: Coin[]): PortfolioSummaryData 
 
   const buckets = new Map<string, CoinBucket>()
   const missingPrice: Holding[] = []
+  const foreignCurrency: Holding[] = []
 
   for (const hold of holdings) {
     const coin = priceMap.get(hold.coinId)
 
     if (coin === undefined) {
       missingPrice.push(hold)
+      continue
+    }
+
+    if (hold.buyCurrency !== currency) {
+      foreignCurrency.push(hold)
       continue
     }
 
@@ -80,6 +86,7 @@ const buildSummary = (holdings: Holding[], coins: Coin[]): PortfolioSummaryData 
   return {
     positions,
     missingPrice,
+    foreignCurrency,
     totalInvested,
     totalValue: positions.length > 0 ? totalValue : null,
     pnl: positions.length > 0 ? pnl : null,
@@ -87,12 +94,10 @@ const buildSummary = (holdings: Holding[], coins: Coin[]): PortfolioSummaryData 
   }
 }
 
-export const usePortfolioSummary = (): PortfolioSummaryData => {
-  const holdings = usePortfolioStore(s => s.holdings);
-  const { data: coins } = useCoins()
+export const usePortfolioSummary = (holdings: Holding[], coins: Coin[], currency: Currency): PortfolioSummaryData => {
 
   return useMemo(
-    () => buildSummary(holdings, coins ?? []),
-    [holdings, coins]
+    () => buildSummary(holdings, coins, currency),
+    [holdings, coins, currency]
   )
 }

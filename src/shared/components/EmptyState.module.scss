@@ -1,25 +1,3 @@
-.emptyState {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 48px 24px;
-  text-align: center;
-}
-
-.title {
-  margin: 0;
-  font-size: 17px;
-  font-weight: 600;
-}
-
-.description {
-  margin: 0;
-  max-width: 40ch;
-  font-size: 14px;
-  color: var(--color-text-muted);
-}
-
-.action {
-  margin-top: 8px;
-}
+.emptyState { padding: 40px 8px 36px; text-align: center; }
+.title { margin: 0; font: italic 400 17px 'Fraunces', Georgia, serif; color: #4A4335; font-weight: 600; }
+.description { margin-top: 8px; margin-bottom: 0; font: italic 12.5px 'Fraunces', Georgia, serif; color: var(--color-text-muted); }
