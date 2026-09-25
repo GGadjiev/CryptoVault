@@ -1,75 +1,53 @@
-# React + TypeScript + Vite
+# CryptoVault — биржевой лист криптовалют
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Дашборд цен, страницы монет с графиками и личный портфель с расчётом прибыли — в стилистике старой биржевой газеты. Живые данные CoinGecko, три валюты, избранное, книга учёта сделок.
 
-Currently, two official plugins are available:
+**→ [Открыть демо](https://ggadjiev.github.io/CryptoVault/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Что внутри
 
-## React Compiler
+- **Рынок** — топ монет с ценами, изменением за 24ч, капитализацией и 7-дневными мини-графиками в каждой строке. Поиск по названию, «Показать ещё» с догрузкой, переключатель USD / RUB / EUR
+![Скриншот дашборда](/docs/screenshot-dashboard.png)
+- **Страница монеты** — цена, график котировок с тултипом и метками экстремумов, справка эмитента, описание и адреса. Диапазоны 24ч / 7д / 30д
+![Скриншот страницы монеты](/docs/screenshot-coin.png)
+- **Избранное** — звёздочкой в строке; список хранится в браузере и переживает перезагрузку
+![Скриншот избранного](/docs/screenshot-favorite.png)
+- **Портфель** — книга учёта сделок: количество, цена покупки, текущий курс и прибыль по каждой записи. Сводка (вложено / стоимость / прибыль / доходность), структура портфеля по долям, форма добавления записи с автоподстановкой текущего курса
+![Скриншот портфеля](/docs/screenshot-portfolio.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Стек
 
-## Expanding the ESLint configuration
+React 18 · TypeScript (strict) · Vite · React Router · Zustand · Axios · Recharts · CSS Modules
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Работа с лимитами API
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Приложение живёт на бесплатном публичном API CoinGecko (~5–15 запросов в минуту). Чтобы вписаться в эти рамки:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **TTL-кэш во всех хуках запросов** — повторные просмотры и возвраты на вкладки не тратят лимит: сценарий «рынок → монета → назад» стоит 0 запросов вместо 4
+- **Один запрос данных на страницу** — заход в портфель стоит 2 запроса вместо 6
+- **Кэш итогового счётчика монет** на 30 минут
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Производительность
 
-```
+- Селекторы Zustand: клик по звёздочке перерисовывает одну кнопку, а не таблицу на 50 строк
+- `React.memo` на таблице со стабильными пропсами: печать в поиске не перерисовывает список монет
+- Вычисления агрегатов (PnL, доли) мемоизированы и живут в хуках, а не в рендере
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Честность цифр
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Сделки хранят валюту покупки. Книга учёта показывает историческую цену в валюте записи, текущий курс — в выбранной, а прибыль считается только при совпадении валют — без «рубль минус доллар».
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Как запустить
+<pre>
+git clone https://github.com/ТВОЙ_НИК/ИМЯ_РЕПО
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # прод-сборка
+</pre>
+Node 20+, API-ключи не требуются.
 
-```
+## Границы проекта
+
+- Кросс-курсы валют не пересчитываются (сделка в $ при просмотре в ₽) — нужен источник курсов
+- Code-splitting не настроен: бандл 722 КБ (222 gzip) одним куском
+- Серверный прокси для API не реализован — решение лимитов уровня продакшена
