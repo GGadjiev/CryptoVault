@@ -66,3 +66,81 @@
 
 .couponFine { margin: 18px 0 0; font: italic 10.5px 'Fraunces', Georgia, serif; color: var(--color-text-muted); text-align: center; }
 .message { margin: 9px 0 0; text-align: center; font: italic 12.5px 'Fraunces', Georgia, serif; color: var(--color-text); }
+
+.selectRoot {
+  position: relative;
+}
+
+.selectTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font: 600 13px 'IBM Plex Mono', monospace;
+  color: var(--color-text);
+  background: none;
+  border: none;
+  border-bottom: 1.5px solid var(--ink-soft);
+  padding: 4px 0 6px;
+  text-align: left;
+  cursor: pointer;
+}
+.selectRoot:focus-within .selectTrigger {
+  border-bottom-color: var(--color-text);
+}
+.selectTrigger:disabled {
+  color: var(--ink-soft);
+  border-bottom-style: dotted;
+  cursor: default;
+}
+
+.selectArrow {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.selectList {
+  position: absolute;
+  left: 0;
+  right: 0;
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 10;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-text);
+  border-radius: var(--radius-md);
+}
+
+.selectOption, .selectOptionActive {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  padding: 7px 10px;
+  font: 500 12.5px 'IBM Plex Mono', monospace;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--color-text);
+}
+.selectOption:hover {
+  background: rgba(36, 30, 20, 0.045);
+}
+.selectOptionActive {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+.selectOptionSym {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+.selectOptionActive .selectOptionSym {
+  color: var(--color-bg);
+}

@@ -3,6 +3,9 @@ import type { Holding, NewHolding } from "@/features/portfolio";
 import { useState } from "react";
 import styles from './HoldingForm.module.scss';
 import { type Currency, getCurrencySymbol } from "@/shared/lib/formatters";
+import {
+  CoinSelect
+} from "@/features/portfolio/components/HoldingForm/CoinSelect.tsx";
 
 interface HoldingFormProps {
   coins: Coin[];
@@ -134,23 +137,31 @@ export const HoldingForm = (props: HoldingFormProps) => {
 
       <label className={styles.field}>
         <span className={styles.label}>Монета</span>
-        <select
-          className={
-            errors.coinId
-              ? `${styles.input} ${styles.inputError}`
-              : styles.input
-          }
-          disabled={editing !== undefined}
+        {/*<select*/}
+        {/*  className={*/}
+        {/*    errors.coinId*/}
+        {/*      ? `${styles.input} ${styles.inputError}`*/}
+        {/*      : styles.input*/}
+        {/*  }*/}
+        {/*  disabled={editing !== undefined}*/}
+        {/*  value={form.coinId}*/}
+        {/*  onChange={event => handleCoinChange(event.target.value)}*/}
+        {/*>*/}
+        {/*  <option value="" disabled>— выбери монету —</option>*/}
+        {/*  {coins.map((coin) => (*/}
+        {/*    <option key={coin.id} value={coin.id}>*/}
+        {/*      {coin.name} · {coin.symbol.toUpperCase()}*/}
+        {/*    </option>*/}
+        {/*  ))}*/}
+        {/*</select>*/}
+
+        <CoinSelect
+          coins={coins}
           value={form.coinId}
-          onChange={event => handleCoinChange(event.target.value)}
-        >
-          <option value="" disabled>— выбери монету —</option>
-          {coins.map((coin) => (
-            <option key={coin.id} value={coin.id}>
-              {coin.name} · {coin.symbol.toUpperCase()}
-            </option>
-          ))}
-        </select>
+          onChange={handleCoinChange}
+          disabled={editing !== undefined}
+        />
+
         {errors.coinId && <span className={styles.error}>{errors.coinId}</span>}
       </label>
 
