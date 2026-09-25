@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              return s.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(null, null, l.pathname + decoded + l.hash);
+        }
+      })(window.location);
+    </script>
+    <title>СryptoVault</title>
+    <script type="module" crossorigin src="/CryptoVault/assets/index-BtH5_1eN.js"></script>
+    <link rel="stylesheet" crossorigin href="/CryptoVault/assets/index-CEumKYrK.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
