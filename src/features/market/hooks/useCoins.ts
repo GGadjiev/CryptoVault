@@ -68,7 +68,7 @@ export const useCoins = (options: UseCoinsOptions = {}): UseCoinsResult => {
         Date.now() - cached.timestamp < CACHE_TTL
       ) {
         setData(cached.coins);
-        setTotalCount(cached.totalCount);
+        setTotalCount((prev) => cached.totalCount ?? prev);
         setIsLoading(false);
         setError(null);
         return;
@@ -134,7 +134,7 @@ export const useCoins = (options: UseCoinsOptions = {}): UseCoinsResult => {
         setData((prev) =>
           page === 1 ? coins : [...(prev ?? []), ...coins],
         );
-        setTotalCount(totalCountFromApi);
+        setTotalCount((prev) => totalCountFromApi ?? prev);
         setIsLoading(false);
 
       } catch (error) {
